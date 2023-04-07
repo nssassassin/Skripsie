@@ -24,6 +24,9 @@
 \let\originall@chapter\l@chapter
 \def\l@chapter#1#2{\originall@chapter{{\rmfamily  #1}}{#2}}
 \makeatother
+\titleformat*{\section}{\Large\bfseries\rmfamily}
+\titleformat*{\subsection}{\large\bfseries\rmfamily}
+\titleformat*{\subsubsection}{\bfseries\rmfamily}
 
 %% Alternative headings using small-caps (comment out the top section)
 %\usepackage[raggedright,bf]{titlesec}
@@ -125,7 +128,7 @@
 % Contents
 \input{introduction/introduction}
 \input{body/LiteratureStudy}
-\input{body/SystemOverview}
+\input{body/SystemDesign}
 \input{body/analysis}
 \input{conclusion/conclusion}
 
