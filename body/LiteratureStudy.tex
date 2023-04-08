@@ -17,6 +17,8 @@
 This article was a case study of air quality monitoring at a bus stop in an underpass on the campus of Lancaster University. The bus stop was suspected to have high levels of air pollution due to the large number of vehicles passing through the tunnel. They used an Aeroqual AQY Micro Air Quality Station to measure the concentrations of $NO_2$, $PM_{10}$ and $PM_{2.5}$ at the bus stop. 
 
 
+
+
 \subsubsection{Exposure to traffic air pollutants in taxicabs \cite{insidetaxismall}}
 This study reviewed the level of pollutants present inside taxi cabs(American style taxis). The article reports that the exposure studies show that traffic related air pollutants concentrations inside taxicabs are higher than their urban background. This was a research based study.
 
@@ -51,6 +53,54 @@ This sensor suite was designed for home use, it features:
 \end{itemize}
 This sensor was not intended to be extremely accurate and seems to be more for sensing danger than accurate measuring.
 It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstable}
+
+
+
+
+\section{Air Quality Monitoring Methods}
+
+\subsection{Sensors}
+\subsubsection{Carbon Dioxide ($CO_2$)}
+%The most common and widely used sensor type is an NDIR sensor. With an electro
+There are two main types of CO2 sensors: infrared gas sensors (NDIR) and chemical gas sensors. \cite{disruptive:co2sensor}
+The most common and more accurate sensor type is the NDIR sensor. Chemical sensors typically use less power and can be smaller but are less accurate and are more prone to aging effects.
+
+\subsubsection{VOC}
+VOC sensors measure volatile organic compounds in the air, such as what is found in petroleum fuels. There are three main types of sensors used to detect VOC\cite{ourpcb:vocsensor}\cite{utmel:vocsensor}:
+
+\begin{itemize}
+	\item photoionization detector (PID)
+	\item flame ionization detector (FID)
+	\item metal oxide semiconductor sensor (MOS)
+\end{itemize}
+PID sensors uses ultraviolet light to ionize the VOC molecules and measure the electric current. They are typically used for low concentrations.
+FID sensors, are similar to PID sensors, but use a flame instead of UV light.
+A MOS sensor uses a heated metal oxide film that reacts with VOC and measures the change in resistance. This sensor is typically used from low to medium concentration.\cite{ourpcb:vocsensor}\cite{utmel:vocsensor} 
+
+
+
+
+\subsubsection{PM}
+Particulate matter sensors measure the concentration and size of airborne particles. They use different methods to detect particles, such as:
+\begin{itemize}
+	\item light scattering
+	\item light obscuration
+	\item direct imaging
+\end{itemize}
+Light scattering is used for smaller sized particles(<1 $ \si{\micro\meter} $), while obscuration is used for larger particles\cite{thomasnet:particlesensor}. Direct imaging depends on the resolution and size of the sensor, but is usually prohibitively expensive.
+
+\subsubsection{$\mathbf{NO_x}$}
+${NO_x}$ sensors measure Nitrogen Oxides typically found in exhaust gases of diesel engines\cite{autolintec:noxsensor}. There are different types of ${NO_x}$ sensors\cite{drivearchive:noxsensor}:
+\begin{itemize}
+	\item Electrochemical
+	\item Zirconia
+\end{itemize}
+Electrochemical uses an electrolyte to create a current proportional to the concentration.
+Zirconia sensors use ceramic material and changes resistance based on concentration.
+Zirconia sensors typically run at lower temperatures and are more customizable.\cite{miura2006electrochemical}
+
+
+
 %\section{Air Quality Monitoring}
 %For this project it is necessary to monitor the air quality and how that pertains to health conditions and what causes the rise in these parameters.
 %\subsection{Choosing Monitoring Parameters}
