@@ -19,13 +19,40 @@ Choosing a microcontroller comes down to it's features. For this project the fea
 	\item Communication capabilities
 	\item Expandability / IO
 	\item Storage
-	\item Compatibility
 	\item Power draw
 	\item Size
 	\item Cost
 \end{itemize}
 
-A few common microcontroller boards available at the time of writing are compared in the table below:
+\noindent
+A few common microcontroller boards available at the time of writing are compared in the table below along with their respective specifications:
+
+
+\begin{table}[!htb]
+	\resizebox{\columnwidth}{!}{%
+	\begin{tabular}{|llccc|}
+		\hline
+		&          & \multicolumn{1}{l}{ESP32-S2 lolin  mini}         & \multicolumn{1}{l}{ESP8266 NodeMCU} & \multicolumn{1}{l|}{Raspberry Pi Zero W}  \\ \hline
+		Speed &
+		&
+		\multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Tensilica Xtensa LX7 32 bit \\  Single-Core @ 240Mhz\end{tabular}} &
+		\multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Tensilica LX106 32 bit \\ @ 80 MHz (up to   160 MHz)\end{tabular}} &
+		\multicolumn{1}{l|}{BCM2835 1GHz} \\ \hline
+		Communication          & Wifi     & 802.11b/g/n                                      & 802.11b/g/n max 65mbps              & 802.11b/g/n                               \\ \hline
+		Expandability  / IO    & I2C      & 2                                                & 1                                   & 2                                         \\ \cline{1-1} \cline{3-5} 
+		\multicolumn{1}{|l|}{} & ADC      & 20 x 12bit                                       & 1 x 10 bit                          & 8 x 17 bit                                \\ \cline{3-5} 
+		\multicolumn{1}{|l|}{} & CAN/TWAI & X                                                &                                     & Needs HAT                                 \\ \cline{3-5} 
+		\multicolumn{1}{|l|}{} & GPIO     & 43                                               & 17                                  & 40                                        \\ \cline{3-5} 
+		\multicolumn{1}{|l|}{} & UART     & X                                                & X                                   & X                                         \\ \hline
+		Storage                &          & \multicolumn{1}{l}{Micro SD and USB OTG}         & \multicolumn{1}{l}{Needs module}    & \multicolumn{1}{l|}{Micro SD and USB OTG} \\ \hline
+		Power draw             &          & \multicolumn{1}{l}{190mA peak when sending WiFi} & \multicolumn{1}{l}{250mA peak}      & \multicolumn{1}{l|}{260mA at idle}        \\ \hline
+		Size                   &          & \multicolumn{1}{l}{34.3*25.4mm}                  & \multicolumn{1}{l}{49*26mm}         & \multicolumn{1}{l|}{60*30mm}              \\ \hline
+	\end{tabular}
+	}
+	\caption{Microcontroller option and Specifications}
+	\label{tab:my-table}
+\end{table}
+
 
 
 
