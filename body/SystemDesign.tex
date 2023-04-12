@@ -28,42 +28,78 @@ Choosing a microcontroller comes down to it's features. For this project the fea
 A few common microcontroller boards available at the time of writing are compared in the table below along with their respective specifications:
 
 
+
+% \usepackage{tabularray}
 \begin{table}[!htb]
-	\resizebox{\columnwidth}{!}{%
-	\begin{tabular}{|llccc|}
-		\hline
-		&          & \multicolumn{1}{l}{ESP32-S2 lolin  mini}         & \multicolumn{1}{l}{ESP8266 NodeMCU} & \multicolumn{1}{l|}{Raspberry Pi Zero W}  \\ \hline
-		Speed &
-		&
-		\multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Tensilica Xtensa LX7 32 bit \\  Single-Core @ 240Mhz\end{tabular}} &
-		\multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Tensilica LX106 32 bit \\ @ 80 MHz (up to   160 MHz)\end{tabular}} &
-		\multicolumn{1}{l|}{BCM2835 1GHz} \\ \hline
-		Communication          & Wifi     & 802.11b/g/n                                      & 802.11b/g/n max 65mbps              & 802.11b/g/n                               \\ \hline
-		Expandability  / IO    & I2C      & 2                                                & 1                                   & 2                                         \\ \cline{1-1} \cline{3-5} 
-		\multicolumn{1}{|l|}{} & ADC      & 20 x 12bit                                       & 1 x 10 bit                          & 8 x 17 bit                                \\ \cline{3-5} 
-		\multicolumn{1}{|l|}{} & CAN/TWAI & X                                                &                                     & Needs HAT                                 \\ \cline{3-5} 
-		\multicolumn{1}{|l|}{} & GPIO     & 43                                               & 17                                  & 40                                        \\ \cline{3-5} 
-		\multicolumn{1}{|l|}{} & UART     & X                                                & X                                   & X                                         \\ \hline
-		Storage                &          & \multicolumn{1}{l}{Micro SD and USB OTG}         & \multicolumn{1}{l}{Needs module}    & \multicolumn{1}{l|}{Micro SD and USB OTG} \\ \hline
-		Power draw             &          & \multicolumn{1}{l}{190mA peak when sending WiFi} & \multicolumn{1}{l}{250mA peak}      & \multicolumn{1}{l|}{260mA at idle}        \\ \hline
-		Size                   &          & \multicolumn{1}{l}{34.3*25.4mm}                  & \multicolumn{1}{l}{49*26mm}         & \multicolumn{1}{l|}{60*30mm}              \\ \hline
-	\end{tabular}
+	\centering
+
+	\resizebox{\linewidth}{!}{%
+		\begin{tblr}{
+				cell{3}{3} = {c},
+				cell{3}{4} = {c},
+				cell{3}{5} = {c},
+				cell{4}{3} = {c},
+				cell{4}{4} = {c},
+				cell{4}{5} = {c},
+				cell{5}{3} = {c},
+				cell{5}{4} = {c},
+				cell{5}{5} = {c},
+				cell{6}{3} = {c},
+				cell{6}{4} = {c},
+				cell{6}{5} = {c},
+				cell{7}{3} = {c},
+				cell{7}{4} = {c},
+				cell{7}{5} = {c},
+				cell{8}{3} = {c},
+				cell{8}{4} = {c},
+				cell{8}{5} = {c},
+				vline{1,6} = {1-4,9-12}{},
+				vline{1-2,6} = {5-8}{},
+				hline{1-4,9-13} = {-}{},
+				hline{5} = {1,3-5}{},
+				hline{6-8} = {3-5}{},
+			}
+			&          & ESP32-S2 lolin  mini                                   & ESP8266 NodeMCU                                        & Raspberry Pi Zero W  \\
+			Speed               &          & {Tensilica Xtensa LX7 32 bit \\  Single-Core @ 240Mhz} & {Tensilica LX106 32 bit \\ @ 80 MHz (up to   160 MHz)} & BCM2835 1GHz         \\
+			Communication       & Wifi     & 802.11b/g/n                                            & 802.11b/g/n max 65mbps                                 & 802.11b/g/n          \\
+			Expandability  / IO & I2C      & 2                                                      & 1                                                      & 2                    \\
+			& ADC      & 20 x 12bit                                             & 1 x 10 bit                                             & 8 x 17 bit           \\
+			& CAN/TWAI & X                                                      &                                                        & Needs HAT            \\
+			& GPIO     & 43                                                     & 17                                                     & 40                   \\
+			& UART     & X                                                      & X                                                      & X                    \\
+			Storage             &          & Micro SD and USB OTG                                   & Needs module                                           & Micro SD and USB OTG \\
+			Power draw          &          & 190mA peak when sending WiFi                           & 250mA peak                                             & 260mA at idle        \\
+			Size                &          & 34.3*25.4mm                                            & 49*26mm                                                & 60*30mm              \\
+			Cost                &          & R99                                                    & R94                                                    & R320.85              
+		\end{tblr}
 	}
 	\caption{Microcontroller option and Specifications}
 	\label{tab:my-table}
 \end{table}
 
-
-
-
+\noindent
+From table~\ref{tab:my-table} the ESP32 s2-mini is power efficient, contains enough expandability to implement the necessary sensors, has wireless capabilities and is more affordable than the alternatives.
 
 
 \subsection{ESPNow/WiFi}
+When considering data transfer between the basestation and satellite station, speed, power consumption and range need to be accounted for.
+According to an article done by Dani Eichhorn from thingpulse, the runtime of a typical ESP32 running on a standard $ 2.5\si{\ampere\hour} $ battery
+can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on esp-NOW, a sixfold increase \cite{wifiespnow}.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.4\linewidth]{body/fig/Comparative_Performance_Study_of_ESP-NOW_Wi-Fi_Bluetooth_Protocols_based_on_Range_Transmission_Speed_Latency_Energy_Usage_and_Barrier_Resistance}
+	\caption{Overall Performance of each Protocol}
+	\label{fig:cmp}
+\end{figure}
+
+\noindent
+In figure~\ref{fig:cmp} extracted from a study done regarding the performance of the various wireless aspects of the esp32\cite{esprange} it can be seen that the transmission range of esp-NOW is superior to that of WiFi making it a valid option for transmission, while also keeping power consumption low. Tests will have to be done to see if the transmission speeds are fast enough to enable transmission of data when the satellite station reaches base.
+
 
 \subsection{Sensors}
-\subsection{$\mathrm{CO_2}$}
+\subsubsection{$\mathrm{CO_2}$}
 % why was it chosen
-\subsection{PM, $\mathrm{NO_x}$, VOC}
+\subsubsection{PM, $\mathrm{NO_x}$, VOC}
 
 \section{Metrics}
 %Does the sensor actually work...
