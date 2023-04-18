@@ -164,12 +164,74 @@ Both the VOC and NOx values are given as an index from a given baseline, so the 
 			\bottomrule
 		\end{tabular}
 	}
-	\caption{Particulate matter sensor specifications. Default conditions of 25±2 DC, 50±10\% relative humidity and 5 V supply voltage apply unless otherwise stated. 'max.' means 'maximum', typ means 'typical', '\% m v.' means '\% of measured value'.}
+	\caption{Particulate matter sensor specifications \cite{sen55}}
 	\label{tab:prtmat}
 \end{table}
 
 
-\noindent As seen in table~\ref{tab:prtmat} \cite
+\noindent As seen in table~\ref{tab:prtmat} \cite{sen55} the precision attained is more than adequate for our measuring purposes.
+
+
+\definecolor{Silver}{rgb}{0.752,0.752,0.752}
+\begin{table}[!htb]
+	\centering
+
+	\resizebox{\linewidth}{!}{%
+		\begin{tblr}{
+				row{1} = {Silver},
+				cell{2}{1} = {r=14}{c},
+				cell{2}{2} = {r=3}{},
+				cell{2}{4} = {c},
+				cell{2}{7} = {r=14}{},
+				cell{3}{4} = {c},
+				cell{4}{4} = {c},
+				cell{5}{2} = {r=3}{},
+				cell{5}{4} = {c},
+				cell{6}{4} = {c},
+				cell{7}{4} = {c},
+				cell{8}{2} = {r=2}{},
+				cell{8}{4} = {c},
+				cell{9}{4} = {c},
+				cell{10}{2} = {r=3}{},
+				cell{10}{4} = {c},
+				cell{11}{4} = {c},
+				cell{12}{4} = {c},
+				cell{13}{2} = {r=3}{},
+				cell{13}{4} = {c},
+				cell{14}{4} = {c},
+				cell{15}{4} = {c},
+				vlines,
+				hline{1,16} = {-}{0.08em},
+				hline{2} = {-}{0.05em},
+				hline{3-4,6-7,9,11-12,14-15} = {3}{l},
+				hline{3-4,6-7,9,11-12,14-15} = {4-5}{},
+				hline{3-15} = {6}{r},
+				hline{5,8,10,13} = {2}{l},
+				hline{5,8,10,13} = {3-5}{},
+			}
+			Parameter & Conditions &  & Min & Typ & Max & Unit\\
+			Average supply current & Idle Mode (first 10 seconds) & SEN55 & - & 3.8 & 4.2 & mA\\
+			&  & SEN54 & - & 7 & 1 & \\
+			&  & SEN50 & - & 0.7 & 1 & \\
+			& Idle Mode (after first 10 seconds) & SEN55 & - & 2.6 & 3 & \\
+			&  & SEN54 & - & 0.7 & 1 & \\
+			&  & SEN50 & - & 0.7 & 1 & \\
+			& RHT/Gas-only Measurement Mode & SEN55 & - & 6.8 & 8 & \\
+			&  & SEN54 & - & 6.5 & 7.7 & \\
+			& Measurement-Mode (first 60   seconds) & SEN55 & - & 70 & 100 & \\
+			&  & SEN54 & - & 70 & 100 & \\
+			&  & SEN50 & - & 70 & 100 & \\
+			& Measurement-Mode   (after first 60 seconds) & SEN55 & - & 63 & 80 & \\
+			&  & SEN54 & - & 63 & 80 & \\
+			&  & SEN50 & - & 63 & 80 & 
+		\end{tblr}
+	}
+	\caption{Current draw \cite{sen55}}
+	\label{tab:powercons}
+\end{table}
+
+\noindent Table~\ref{tab:powercons} \cite{sen55} contains the power requirements for all of these sensors, with the average being 63mA at 5V for typical use.
+
 
 \section{Metrics}
 %Does the sensor actually work...
