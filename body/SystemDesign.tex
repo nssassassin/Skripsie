@@ -87,7 +87,7 @@ According to an article done by Dani Eichhorn from thingpulse, the runtime of a 
 can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on esp-NOW, a sixfold increase \cite{wifiespnow}.
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.4\linewidth]{body/fig/Comparative_Performance_Study_of_ESP-NOW_Wi-Fi_Bluetooth_Protocols_based_on_Range_Transmission_Speed_Latency_Energy_Usage_and_Barrier_Resistance}
+	\includegraphics[width=0.35\linewidth]{body/fig/Comparative_Performance_Study_of_ESP-NOW_Wi-Fi_Bluetooth_Protocols_based_on_Range_Transmission_Speed_Latency_Energy_Usage_and_Barrier_Resistance}
 	\caption{Overall Performance of each Protocol}
 	\label{fig:cmp}
 \end{figure}
@@ -106,10 +106,70 @@ The sensor chosen for the various needed values needed to comply to the various 
 
 \noindent
 The sensor chosen is an all in one sensor, the Sensiron SEN55, it measures Temperature, Humidity, Particulate matter in the ranges 1, 2.5, 4, and 10 \si{\micro\meter}
+Both the VOC and NOx values are given as an index from a given baseline, so the information gathered from it wil be in the form of a qualitative measurement based on what would be considered to be normal values, any deviation from the baseline represents a change in air quality. The particulate matter is given in precise measurements, so that will be helpful to identify the possible types of pollutants as well.
 
 
+% \usepackage{graphicx}
+% \usepackage{multirow}
+% \usepackage{booktabs}
+% \usepackage{colortbl}
 
 
+\begin{table}[!htb]
+	\centering
+	\setlength{\extrarowheight}{0pt}
+	\addtolength{\extrarowheight}{\aboverulesep}
+	\addtolength{\extrarowheight}{\belowrulesep}
+	\setlength{\aboverulesep}{0pt}
+	\setlength{\belowrulesep}{0pt}
+
+	\resizebox{\linewidth}{!}{%
+		\begin{tabular}{|l|l|l|l|l|} 
+			\toprule
+			\rowcolor[rgb]{0.749,0.749,0.749} \multicolumn{1}{|l}{Parameter} & \multicolumn{1}{l}{Conditions} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{Value} & Units \\ 
+			\midrule
+			Mass concentration specified range & \multicolumn{2}{l|}{-} & 0 to 1000 & ug/m3 \\ 
+			\midrule
+			\multirow{4}{*}{Mass concentration size range} & \multicolumn{2}{l|}{PM1.0} & 0.3 to 1.0 & um \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{PM2 5} & 0.3 to 2.5 & um \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{PM4} & 0.3 to 4.0 & um \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{PM10} & 0.3 to 10.0 & um \\ 
+			\midrule
+			\multirow{2}{*}{Mass concentration precision for   PM1 and PM2.5} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±5 ug/m3 AND 5 \% m.v. &  \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±10 & \% m.v. \\ 
+			\midrule
+			\multirow{2}{*}{Mass concentration precision2,3   for PW, PM105} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±25 & ug/m3 \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±25 & \% m.v. \\ 
+			\midrule
+			\multirow{2}{*}{Maximum long-term mass   concentration precision limit drift} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±1 25 & ug/m3 / year \\ 
+			\cmidrule(lr){2-5}
+			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±1 25 & \% m.v. / year \\ 
+			\midrule
+			\multirow{3}{*}{Typical start-up time} & \multirow{3}{*}{number concentration} & 200 - 3000 \#/cm3 & 8 & s \\ 
+			\cmidrule(lr){3-5}
+			&  & 100 -200 \#/cm3 & 16 & s \\ 
+			\cmidrule(lr){3-5}
+			&  & 50 — 100 \#/cm3 & 30 & s \\ 
+			\midrule
+			Sensor output characteristics & \multicolumn{2}{l|}{PM2.5 mass concentration} & \multicolumn{2}{l|}{Calibrated to TSI DustTrak\{TM\} DRX   8533 Ambient Mode} \\ 
+			\midrule
+			Additional T-dependent mass   precision limit drift & temperature difference to 25C & typ. & ±05 & \% m.v./ oc \\ 
+			\midrule
+			Laser wavelength (DIN EN 60825-1   Class 1) & \multicolumn{2}{l}{typ} & 660 & nm \\
+			\bottomrule
+		\end{tabular}
+	}
+	\caption{Particulate matter sensor specifications. Default conditions of 25±2 DC, 50±10\% relative humidity and 5 V supply voltage apply unless otherwise stated. 'max.' means 'maximum', typ means 'typical', '\% m v.' means '\% of measured value'.}
+	\label{tab:prtmat}
+\end{table}
+
+
+\noindent As seen in table~\ref{tab:prtmat} \cite
 
 \section{Metrics}
 %Does the sensor actually work...
