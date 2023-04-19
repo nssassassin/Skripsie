@@ -1,12 +1,20 @@
 \chapter{Detailed System Design}
 \section{ESP32}
-\subsection{Connectivity}
 
-\subsubsection{UART}
+\subsection{Interface}
+The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 
-\subsubsection{i2c}
 
-\subsubsection{ESP-NOW}
+\subsection{UART}
+
+\subsection{i2c}
+
+\subsection{ESP-NOW}
+
+\subsection{SD - interface}
+The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adaptor. These pins were then soldered to the ESP32's SPI and 3.3V pins.
+The FS, SD and SPI libraries from Espresiff were used to interface with the already formatted micro SD card.
+
 
 
 
