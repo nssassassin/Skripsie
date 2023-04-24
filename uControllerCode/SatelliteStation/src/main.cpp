@@ -108,16 +108,22 @@ void setup() {
   
 
   //ESP NOW
-  WiFi.mode(WIFI_MODE_STA);
+  WiFi.mode(WIFI_STA);
+    // Init ESP-NOW
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+  esp_now_register_send_cb(OnDataSent);
   Serial.println(WiFi.macAddress());
   // Register peer
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
   peerInfo.channel = 0;  
   peerInfo.encrypt = false;
     // Add peer        
-  if (esp_now_add_peer(&peerInfo) != ESP_OK){
+  while (esp_now_add_peer(&peerInfo) != ESP_OK){
     Serial.println("Failed to add peer");
-    return;
+  
   }
   // Register for a callback function that will be called when data is received
   esp_now_register_recv_cb(OnDataRecv);

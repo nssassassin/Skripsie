@@ -49,7 +49,8 @@ typedef struct struct_message {
     float vocIndex_;
     float noxIndex_;   
 } struct_message;
-
+struct_message sendingdata;
+struct_message receivedata;
 esp_now_peer_info_t peerInfo;
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
@@ -106,7 +107,13 @@ void setup() {
   
 
   //ESP NOW
-  WiFi.mode(WIFI_MODE_STA);
+  WiFi.mode(WIFI_STA);
+    // Init ESP-NOW
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+    esp_now_register_send_cb(OnDataSent);
   Serial.println(WiFi.macAddress());
   // Register peer
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
@@ -124,8 +131,7 @@ void setup() {
 
 
 //How to send data
-struct_message sendingdata;
-struct_message receivedata;
+
 //sendingdata.co2_ = co2;
 //esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
 
