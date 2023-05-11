@@ -233,13 +233,29 @@ Both the VOC and NOx values are given as an index from a given baseline, so the 
 \noindent Table~\ref{tab:powercons} \cite{sen55} contains the power requirements for all of these sensors, with the average being 63mA at 5V for typical use.
 
 \subsection{Power}
-From the previous section the power usage on average was found to be $ 70 +  63 = 133\si{\milli\ampere}$ consumption for the sensors alone. Depending on the draw from the ESP32 the consumption total would average around $ 70 +  63 + 90 = 223\si{\milli\ampere}$\cite{wifiespnow}. 
-
+From the previous section the power usage on average was found to be $ 70 +  63 = 133\si{\milli\ampere}$ consumption for the sensors alone. Depending on the draw from the ESP32 the consumption total would average around $ 70 +  63 + 90 = 223\si{\milli\ampere}$\cite{wifiespnow}.
+And for the satellite station there is one more drain of power, the ATGM336H gps, with average power consumption of 20 mA\cite{atgm336h} bringing the satellite station to 243mA .
+%
 \noindent
-For the intended use, remote data gathering would be done with the help of a lithium battery pack, as lithium ion /polymer batteries are energy dense and are commonly found in USB power banks. Most of the sensors and the microcontroller either have native 5V input or have a voltage regulator onboard making it ideal. To calculate the size of the battery necessary, we take the typical usage, in the case of inside the taxi being 3 hours for the morning commutes and in the case of the base station 14 hours for the full day data. This gives: $223\si{\milli\ampere} \times 14 = 3.122 \si{\ampere\hour} $ at 5V. This equates to $15.61 \si{\watt\hour}$. Typically battery bank capacity is given in $ \si{\milli\amphour} $ but this can be deceiving as it normally references the capacity of the cells in parallel with an average voltage of 3.7V not the 5V output. With the $15.61 \si{\watthour}$ needed, this would equate to a  $ 4218,9\si{\milli\amphour} $ Power bank needed. To ensure Full day usage, a typical power bank of 10000$ \si{\milli\amphour} $ is chosen. This also ensures that, should the system need to, it would be able to provide 24 hour data.
-
+For the intended use, remote data gathering would be done with the help of a lithium battery pack, as lithium ion /polymer batteries are energy dense and are commonly found in USB power banks. Most of the sensors and the microcontroller either have native 5V input or have a voltage regulator onboard making it ideal. To calculate the size of the battery necessary, we take the typical usage, in the case of inside the taxi being 3 hours for the morning commutes and in the case of the base station 14 hours for the full day data. This gives: $223\si{\milli\ampere} \times 14 = 3.122 \si{\ampere\hour} $ at 5V. This equates to $15.61 \si{\watt\hour}$. Typically battery bank capacity is given in $ \si{\milli\amphour} $ but this can be deceiving as it normally references the capacity of the cells in parallel with an average voltage of 3.7V not the 5V output. With the $15.61 \si{\watthour}$ needed, this would equate to a  $ 4218,9\si{\milli\amphour} $ Power bank needed. To ensure Full day usage, a typical power bank of 10000 $ \si{\milli\amphour} $ is chosen. This also ensures that, should the system need to, it would be able to provide 24 hour data.
+\pagebreak
 
 \section{Metrics}
+
+\subsection{Sensors}
+To test sensor workings I initially set up the receiver just outside my flat window rto
+
+
+\subsection{ESP-NOW}
+
+
+
+
+
+Initial testing for the sensor at night outside my flat produced the following results:
+21:10:17:620 -> Latitude: -33.929137
+21:10:17:620 -> Longitude: 18.858356
+21:10:18:023 -> CO2:482 MassConcentrationPm1p0:18.00    MassConcentrationPm2p5:18.80    MassConcentrationPm4p0:18.80    MassConcentrationPm10p0:18.80   AmbientHumidity:68.96   AmbientTemperature:18.36        VocIndex:94.00  NoxIndex:1.00
 %Does the sensor actually work...
 %Does it work as wanted
 %Experimental setup

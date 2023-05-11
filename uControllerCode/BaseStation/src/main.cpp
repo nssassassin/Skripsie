@@ -90,20 +90,20 @@ void setup() {
   uint16_t error;
   char errorMessage[256];
   error = sen5x.deviceReset();
-  // while (error) {
-  //     Serial.print("Error trying to execute deviceReset(): ");
-  //     errorToString(error, errorMessage, 256);
-  //     Serial.println(errorMessage);
-  //     delay(1000);
-  //     error = sen5x.deviceReset();
-  // }
-  //     // Start Measurement
-  //   error = sen5x.startMeasurement();
-  //   if (error) {
-  //       Serial.print("Error trying to execute startMeasurement(): ");
-  //       errorToString(error, errorMessage, 256);
-  //       Serial.println(errorMessage);
-  //   }
+   while (error) {
+       Serial.print("Error trying to execute deviceReset(): ");
+       errorToString(error, errorMessage, 256);
+       Serial.println(errorMessage);
+       delay(1000);
+       error = sen5x.deviceReset();
+   }
+       // Start Measurement
+     error = sen5x.startMeasurement();
+    if (error) {
+         Serial.print("Error trying to execute startMeasurement(): ");
+        errorToString(error, errorMessage, 256);
+         Serial.println(errorMessage);
+     }
   
 
   //ESP NOW
@@ -141,80 +141,80 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   //k30
-//   int co2; // Variable to store CO2 value
-//   int status; // Variable to store status of reading
-//   status = k30.readCO2(co2); // Read CO2 value from sensor
-//   if (status == 0) { // If reading was successful
-//     Serial.print("CO2:"); // Print CO2 label
-//     Serial.print(co2); // Print CO2 value
+   int co2; // Variable to store CO2 value
+   int status; // Variable to store status of reading
+   status = k30.readCO2(co2); // Read CO2 value from sensor
+   if (status == 0) { // If reading was successful
+     Serial.print("CO2:"); // Print CO2 label
+     Serial.print(co2); // Print CO2 value
 //     //Serial.print(" ppm"); // Print ppm unit
-//     Serial.print("\t");
-//   } else { // If reading failed
-//     Serial.print("Error: "); // Print error label
-//     Serial.println(status, HEX); // Print error code in hexadecimal
-//   }
+     Serial.print("\t");
+   } else { // If reading failed
+     Serial.print("Error: "); // Print error label
+     Serial.println(status, HEX); // Print error code in hexadecimal
+   }
 
-// // sensirion
-//     uint16_t error;
-//     char errorMessage[256];
-//     float massConcentrationPm1p0;
-//     float massConcentrationPm2p5;
-//     float massConcentrationPm4p0;
-//     float massConcentrationPm10p0;
-//     float ambientHumidity;
-//     float ambientTemperature;
-//     float vocIndex;
-//     float noxIndex;   
-//     error = sen5x.readMeasuredValues(
-//         massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
-//         massConcentrationPm10p0, ambientHumidity, ambientTemperature, vocIndex,
-//         noxIndex);
+// sensirion
+    uint16_t error;
+    char errorMessage[256];
+    float massConcentrationPm1p0;
+    float massConcentrationPm2p5;
+    float massConcentrationPm4p0;
+    float massConcentrationPm10p0;
+    float ambientHumidity;
+    float ambientTemperature;
+    float vocIndex;
+    float noxIndex;   
+    error = sen5x.readMeasuredValues(
+        massConcentrationPm1p0, massConcentrationPm2p5, massConcentrationPm4p0,
+        massConcentrationPm10p0, ambientHumidity, ambientTemperature, vocIndex,
+        noxIndex);
 
-//     if (error) {
-//         Serial.print("Error trying to execute readMeasuredValues(): ");
-//         errorToString(error, errorMessage, 256);
-//         Serial.println(errorMessage);
-//     } else {
-//         Serial.print("MassConcentrationPm1p0:");
-//         Serial.print(massConcentrationPm1p0);
-//         Serial.print("\t");
-//         Serial.print("MassConcentrationPm2p5:");
-//         Serial.print(massConcentrationPm2p5);
-//         Serial.print("\t");
-//         Serial.print("MassConcentrationPm4p0:");
-//         Serial.print(massConcentrationPm4p0);
-//         Serial.print("\t");
-//         Serial.print("MassConcentrationPm10p0:");
-//         Serial.print(massConcentrationPm10p0);
-//         Serial.print("\t");
-//         Serial.print("AmbientHumidity:");
-//         if (isnan(ambientHumidity)) {
-//             Serial.print("n/a");
-//         } else {
-//             Serial.print(ambientHumidity);
-//         }
-//         Serial.print("\t");
-//         Serial.print("AmbientTemperature:");
-//         if (isnan(ambientTemperature)) {
-//             Serial.print("n/a");
-//         } else {
-//             Serial.print(ambientTemperature);
-//         }
-//         Serial.print("\t");
-//         Serial.print("VocIndex:");
-//         if (isnan(vocIndex)) {
-//             Serial.print("n/a");
-//         } else {
-//             Serial.print(vocIndex);
-//         }
-//         Serial.print("\t");
-//         Serial.print("NoxIndex:");
-//         if (isnan(noxIndex)) {
-//             Serial.println("n/a");
-//         } else {
-//             Serial.println(noxIndex);
-//         }
-//     }    
+    if (error) {
+        Serial.print("Error trying to execute readMeasuredValues(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    } else {
+        Serial.print("MassConcentrationPm1p0:");
+        Serial.print(massConcentrationPm1p0);
+        Serial.print("\t");
+        Serial.print("MassConcentrationPm2p5:");
+        Serial.print(massConcentrationPm2p5);
+        Serial.print("\t");
+        Serial.print("MassConcentrationPm4p0:");
+        Serial.print(massConcentrationPm4p0);
+        Serial.print("\t");
+        Serial.print("MassConcentrationPm10p0:");
+        Serial.print(massConcentrationPm10p0);
+        Serial.print("\t");
+        Serial.print("AmbientHumidity:");
+        if (isnan(ambientHumidity)) {
+            Serial.print("n/a");
+        } else {
+            Serial.print(ambientHumidity);
+        }
+        Serial.print("\t");
+        Serial.print("AmbientTemperature:");
+        if (isnan(ambientTemperature)) {
+            Serial.print("n/a");
+        } else {
+            Serial.print(ambientTemperature);
+        }
+        Serial.print("\t");
+        Serial.print("VocIndex:");
+        if (isnan(vocIndex)) {
+            Serial.print("n/a");
+        } else {
+            Serial.print(vocIndex);
+        }
+        Serial.print("\t");
+        Serial.print("NoxIndex:");
+        if (isnan(noxIndex)) {
+            Serial.println("n/a");
+        } else {
+            Serial.println(noxIndex);
+        }
+    }    
 
 
   delay(10000); // Wait for 1 second

@@ -6,10 +6,19 @@
 #include <WiFi.h>
 #include <esp_now.h>
 
-
+#include <TinyGPS++.h>
 #define RXD2 16
 #define TXD2 17
 
+// variable definitions
+byte last_second, Second, Minute, Hour, Day, Month;
+int Year;
+const int UTC_offset = 2;
+time_t prevDisplay = 0; // Count for when time last displayed
+// Define the serial connection to the A7 module
+#define GPS Serial1
+//SoftwareSerial gpsSerial(RX_PIN, TX_PIN);
+TinyGPSPlus gps;
 
 //This is for the sensirion
 #define MAXBUF_REQUIREMENT 48
@@ -80,10 +89,10 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
     delay(3000);
-  Serial1.begin(115200, SERIAL_8N1, RXD2, TXD2);
+  Serial1.begin(9600, SERIAL_8N1, RXD2, TXD2);
     delay(3000);
   Serial.println("Start up");  
-
+  Serial.println(TinyGPSPlus::libraryVersion());
 
   //sensirion
   sen5x.begin(Wire);
@@ -134,12 +143,14 @@ void setup() {
 
 //sendingdata.co2_ = co2;
 //esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
-
+int period = 10000;
+unsigned long time_now = 0;
 
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+if(millis() >= time_now + period){
+        time_now += period;
   //k30
   int co2; // Variable to store CO2 value
   int status; // Variable to store status of reading
@@ -227,5 +238,57 @@ void loop() {
     sendingdata.noxIndex_ = noxIndex;    
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
 
-  delay(10000); // Wait for 1 second
+}
+  //delay(10000); // Wait for 10 seconds
+    while (GPS.available()) {
+    // Read a byte of data from the GPS module
+    char c = GPS.read();
+
+    // Write the byte to the serial monitor
+   // Serial.write(c);
+
+    // Feed the byte to the TinyGPSPlus object
+    gps.encode(c);
+
+    // Check if a new location is available
+    if (gps.location.isUpdated()) {
+      Serial.println("");
+      Serial.println("");
+      Serial.print("Latitude: ");
+      Serial.println(gps.location.lat(), 6);
+      Serial.print("Longitude: ");
+      Serial.println(gps.location.lng(), 6);
+      if (gps.time.isValid())
+      {
+        Minute = gps.time.minute();
+        Second = gps.time.second();
+        Hour   = gps.time.hour();
+      }    
+            // get date drom GPS module
+      if (gps.date.isValid())
+      {
+        Day   = gps.date.day();
+        Month = gps.date.month();
+        Year  = gps.date.year();
+      }
+      if(last_second != gps.time.second())  // if time has changed
+      {
+        last_second = gps.time.second();
+        Serial.print("time: ");
+        Serial.print(Year);
+        Serial.print("/");
+        Serial.print(Month);
+        Serial.print("/");
+        Serial.println(Day); 
+        Serial.print("-");
+        Serial.print(Hour);
+        Serial.print(":");
+        Serial.print(Minute);
+        Serial.print(":");
+        Serial.println(Second); 
+
+      }
+    }
+
+  }
 }
