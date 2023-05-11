@@ -39,7 +39,7 @@ The GPS unit uses UART Serial commands to send its data to the ESP32. The data r
 \end{table}
 This data is sent over the uart in comma delimited messages, the uart is set to default to 9600 baud.
 
-The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first uart is set to 115200 baud and the second to 9600.  
+The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
 
 
 \subsection{i2c}
