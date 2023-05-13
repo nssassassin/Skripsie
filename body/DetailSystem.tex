@@ -13,8 +13,6 @@ The main ESP referenced as the Base station, will be connected periodically to t
 
 \subsection{UART}
 The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most gps receivers.\cite{NMEA}
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
 \begin{table}[!htb]
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{|l|l|}
@@ -37,8 +35,9 @@ The GPS unit uses UART Serial commands to send its data to the ESP32. The data r
 	\label{tab:nmea}
 	\caption{NMEA Sentences and their meanings \cite{GPSSentence}}
 \end{table}
-This data is sent over the uart in comma delimited messages, the uart is set to default to 9600 baud.
 
+\noindent
+This data is sent over the uart in comma delimited messages, the uart is set to default to 9600 baud.
 The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
 
 
