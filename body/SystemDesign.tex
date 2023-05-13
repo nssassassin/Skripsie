@@ -81,7 +81,7 @@ A few common microcontroller boards available at the time of writing are compare
 From table~\ref{tab:my-table} the ESP32 s2-mini is power efficient, contains enough expandability to implement the necessary sensors, has wireless capabilities and is more affordable than the alternatives.
 
 
-\subsection{ESPNow/WiFi}
+\subsection{ESP-NOW/WiFi}
 When considering data transfer between the basestation and satellite station, speed, power consumption and range need to be accounted for.
 According to an article done by Dani Eichhorn from thingpulse, the runtime of a typical ESP32 running on a standard $ 2.5\si{\ampere\hour} $ battery
 can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on esp-NOW, a sixfold increase \cite{wifiespnow}.
@@ -249,7 +249,8 @@ To test sensor workings I initially set up the receiver outside of my place of r
 
 
 \subsection{ESP-NOW}
-To test the ESP-NOW, I uploaded the firmware for both the 
+To test the ESP-NOW, the firmware for both the base station and the satellite station was uploaded to the respective boards, the base station being connected to the computer via serial to check the output of the device. The satellite station is then taken further and further away from the base station with each message containing the location data at the specific spot, this allows for checking of the range of the esp now to determine what the settings need to be for the calibration of when the satellite should attempt to connect to the base station to transfer data.
+
 
 
 
