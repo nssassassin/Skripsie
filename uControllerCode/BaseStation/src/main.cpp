@@ -32,13 +32,21 @@ K30_I2C k30(K30_I2C_ADDRESS, sdak30, sclk30); // Create a K30 object
 
 
 //This is for esp-now
-//48:27:E2:46:FD:4A This is the base station address.
+//48:27:E2:46:FC:EC This is the base station address.
 //48:27:E2:46:FE:12 This is the satellite address
-uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFD, 0x4A};
-//uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFE, 0x12};
+//uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFC, 0xEC};
+uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFE, 0x12};
 String success;
 
 typedef struct struct_message {
+    int Second;
+    int Minute;
+    int Hour;
+    int Day;
+    int Month;
+    int Year;
+    double lat_;
+    double lon_;
     float co2_;
     float massConcentrationPm1p0_;
     float massConcentrationPm2p5_;
@@ -53,6 +61,8 @@ struct_message sendingdata;
 struct_message receivedata;
 esp_now_peer_info_t peerInfo;
 
+struct_message lastMessage;
+
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   Serial.print("\r\nLast Packet Send Status:\t");
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
@@ -63,13 +73,16 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     success = "Delivery Fail :(";
   }
 }
+int RECEIVED = 0;
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
    memcpy(&receivedata, incomingData, sizeof(receivedata));
    Serial.print("Bytes received: ");
   Serial.println(len);
-   Serial.println(receivedata.ambientTemperature_);
+  RECEIVED = 1;
+   //Serial.println(receivedata.ambientTemperature_);
 
- }
+
+}
 
 
 
@@ -139,14 +152,76 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  if(RECEIVED == 1){
+  Serial.print("SATELLITE time: ");
+  Serial.print(receivedata.Year);
+  Serial.print("/");
+  Serial.print(receivedata.Month);
+  Serial.print("/");
+  Serial.print(receivedata.Day); 
+  Serial.print("-");
+  Serial.print(receivedata.Hour);
+  Serial.print(":");
+  Serial.print(receivedata.Minute);
+  Serial.print(":");
+  Serial.print(receivedata.Second); 
+  Serial.print(" ");
+  Serial.print("Location: ");
+  Serial.print(receivedata.lat_, 10);
+  Serial.print(", ");
+  Serial.print(receivedata.lon_, 10);
+  Serial.print(" ");
+  Serial.print("CO2:  +");
+  Serial.print(receivedata.co2_);
+  Serial.print(","); 
+  Serial.print("MassConcentrationPm1p0:  +");
+  Serial.print(receivedata.massConcentrationPm1p0_);
+  Serial.print(",");
+  Serial.print("MassConcentrationPm2p5: ");
+  Serial.print(receivedata.massConcentrationPm2p5_);
+  Serial.print(",");
+  Serial.print("MassConcentrationPm4p0: ");
+  Serial.print(receivedata.massConcentrationPm4p0_);
+  Serial.print(",");
+  Serial.print("MassConcentrationPm10p0: ");
+  Serial.print(receivedata.massConcentrationPm10p0_);
+  Serial.print(",");
+  Serial.print("AmbientHumidity: ");
+  if (isnan(receivedata.ambientHumidity_)) {
+      Serial.print("n/a");
+  } else {
+      Serial.print(receivedata.ambientHumidity_);
+  }
+  Serial.print(",");
+   Serial.print("AmbientTemperature: ");
+  if (isnan(receivedata.ambientTemperature_)) {
+      Serial.print("n/a");
+  } else {
+      Serial.print(receivedata.ambientTemperature_);
+  }
+  Serial.print("C,");
+  Serial.print("VocIndex: ");
+  if (isnan(receivedata.vocIndex_)) {
+      Serial.print("n/a");
+  } else {
+      Serial.print(receivedata.vocIndex_);
+  }
+  Serial.print(",");
+  Serial.print("NoxIndex: ");
+  if (isnan(receivedata.noxIndex_)) {
+      Serial.println("n/a");
+  } else {
+      Serial.println(receivedata.noxIndex_);
+  }
+  RECEIVED = 0;
+  }
   //k30
    int co2; // Variable to store CO2 value
    int status; // Variable to store status of reading
    status = k30.readCO2(co2); // Read CO2 value from sensor
    if (status == 0) { // If reading was successful
-     Serial.print("CO2:"); // Print CO2 label
-     Serial.print(co2); // Print CO2 value
+     //Serial.print("CO2:"); // Print CO2 label
+     //Serial.print(co2); // Print CO2 value
 //     //Serial.print(" ppm"); // Print ppm unit
      Serial.print("\t");
    } else { // If reading failed
@@ -175,7 +250,7 @@ void loop() {
         errorToString(error, errorMessage, 256);
         Serial.println(errorMessage);
     } else {
-        Serial.print("MassConcentrationPm1p0:");
+/*         Serial.print("MassConcentrationPm1p0:");
         Serial.print(massConcentrationPm1p0);
         Serial.print("\t");
         Serial.print("MassConcentrationPm2p5:");
@@ -213,9 +288,9 @@ void loop() {
             Serial.println("n/a");
         } else {
             Serial.println(noxIndex);
-        }
+        } */
     }    
 
 
-  delay(10000); // Wait for 1 second
+  delay(100); // Wait for 1 second
 }

@@ -11,7 +11,7 @@
 #define TXD2 17
 
 // variable definitions
-byte last_second, Second, Minute, Hour, Day, Month;
+int last_second, Second, Minute, Hour, Day, Month;
 int Year;
 const int UTC_offset = 2;
 time_t prevDisplay = 0; // Count for when time last displayed
@@ -41,13 +41,23 @@ K30_I2C k30(K30_I2C_ADDRESS, sdak30, sclk30); // Create a K30 object
 
 
 //This is for esp-now
-//48:27:E2:46:FD:4A This is the base station address.
+//48:27:E2:46:FC:EC This is the base station address.
 //48:27:E2:46:FE:12 This is the satellite address
 //uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFD, 0x4A};
-uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFE, 0x12};
+//uint8_t localCustomMac [] = {};
+uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFC, 0xEC};
+//uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFE, 0x12};
 String success;
 
 typedef struct struct_message {
+    int Second;
+    int Minute;
+    int Hour;
+    int Day;
+    int Month;
+    int Year;
+    double lat_;
+    double lon_;
     float co2_;
     float massConcentrationPm1p0_;
     float massConcentrationPm2p5_;
@@ -143,8 +153,10 @@ void setup() {
 
 //sendingdata.co2_ = co2;
 //esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
-int period = 10000;
+int period = 1000;
 unsigned long time_now = 0;
+double lastlat;
+double lastlon;
 
 
 void loop() {
@@ -166,6 +178,7 @@ if(millis() >= time_now + period){
   }
 
 // sensirion
+
     uint16_t error;
     char errorMessage[256];
     float massConcentrationPm1p0;
@@ -218,7 +231,7 @@ if(millis() >= time_now + period){
         } else {
             Serial.print(vocIndex);
         }
-        Serial.print("\t");
+        Serial.print( "\t");
         Serial.print("NoxIndex:");
         if (isnan(noxIndex)) {
             Serial.println("n/a");
@@ -229,13 +242,22 @@ if(millis() >= time_now + period){
 
     sendingdata.co2_ = co2;
     sendingdata.massConcentrationPm1p0_ = massConcentrationPm1p0;
-    sendingdata.massConcentrationPm2p5_ =massConcentrationPm2p5;
-    sendingdata.massConcentrationPm4p0_ =massConcentrationPm4p0;
-    sendingdata.massConcentrationPm10p0_ =massConcentrationPm10p0;
-    sendingdata.ambientHumidity_ =ambientHumidity;
-    sendingdata.ambientTemperature_ =ambientTemperature;
+    sendingdata.massConcentrationPm2p5_ = massConcentrationPm2p5;
+    sendingdata.massConcentrationPm4p0_ = massConcentrationPm4p0;
+    sendingdata.massConcentrationPm10p0_ = massConcentrationPm10p0;
+    sendingdata.ambientHumidity_ = ambientHumidity;
+    sendingdata.ambientTemperature_ = ambientTemperature;
     sendingdata.vocIndex_ = vocIndex;
-    sendingdata.noxIndex_ = noxIndex;    
+    sendingdata.noxIndex_ = noxIndex;  
+    sendingdata.lat_ = lastlat;
+    sendingdata.lon_ = lastlon;
+    sendingdata.Second = Second;
+    sendingdata.Minute = Minute;
+    sendingdata.Hour = Hour;
+    sendingdata.Day = Day;
+    sendingdata.Month = Month;
+    sendingdata.Year = Year;
+
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
 
 }
@@ -252,6 +274,8 @@ if(millis() >= time_now + period){
 
     // Check if a new location is available
     if (gps.location.isUpdated()) {
+      lastlat = gps.location.lat();
+      lastlon = gps.location.lng();
       Serial.println("");
       Serial.println("");
       Serial.print("Latitude: ");
