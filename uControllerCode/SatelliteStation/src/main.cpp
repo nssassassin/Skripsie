@@ -7,6 +7,75 @@
 #include <esp_now.h>
 
 #include <TinyGPS++.h>
+
+
+#include <time.h>
+#include <SPI.h>
+#include <SD.h>
+#include <FS.h>
+
+RTC_DATA_ATTR int readingID = 0;
+
+String dataMessage;
+// Append data to the SD card (DON'T MODIFY THIS FUNCTION)
+void appendFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Appending to file: %s\n", path);
+
+  File file = fs.open(path, FILE_APPEND);
+  if(!file) {
+    Serial.println("Failed to open file for appending");
+    return;
+  }
+  if(file.print(message)) {
+    Serial.println("Message appended");
+  } else {
+    Serial.println("Append failed");
+  }
+  file.close();
+}
+void logSDCard(    float massConcentrationPm1p0,float massConcentrationPm2p5,float massConcentrationPm4p0,float massConcentrationPm10p0,float ambientHumidity,float ambientTemperature,float vocIndex,float noxIndex, float co2 ) {
+  dataMessage = String(readingID) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
+                String(co2) + "\r\n";
+
+  //IN ORDER
+   // float massConcentrationPm1p0;
+   // float massConcentrationPm2p5;
+   // float massConcentrationPm4p0;
+   // float massConcentrationPm10p0;
+   // float ambientHumidity;
+   // float ambientTemperature;
+   // float vocIndex;
+   // float noxIndex;  
+   //float co2
+  Serial.print("Save data: ");
+  Serial.println(dataMessage);
+  appendFile(SD, "/data.csv", dataMessage.c_str());
+}
+void writeFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Writing file: %s\n", path);
+
+  File file = fs.open(path, FILE_WRITE);
+  if(!file) {
+    Serial.println("Failed to open file for writing");
+    return;
+  }
+  if(file.print(message)) {
+    Serial.println("File written");
+  } else {
+    Serial.println("Write failed");
+  }
+  file.close();
+}
+
+
+
+#define SS 34
+#define MOSI 35
+#define MISO 37
+#define SCK 36
+//SPIClass spi = SPIClass(VSPI);
+ // SPI.begin(SCK, MISO, MOSI, SS);
+
 #define RXD2 16
 #define TXD2 17
 
@@ -96,6 +165,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 //end
 
 void setup() {
+  //SPI.begin(SCK,)
+  SPI.begin(SCK, MISO, MOSI, SS);
+  //spi.begin();
   // put your setup code here, to run once:
   Serial.begin(115200);
     delay(3000);

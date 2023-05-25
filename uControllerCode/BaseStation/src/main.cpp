@@ -5,10 +5,45 @@
 #include <SensirionI2CSen5x.h>
 #include <WiFi.h>
 #include <esp_now.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include <Arduino_JSON.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
+// Replace with your network credentials
+const char* ssid     = "Deezwhat";
+const char* password = "deeznuts";
+
+AsyncWebServer server(80);
+AsyncEventSource events("/events");
+
+#include <time.h>
+#include <SPI.h>
+#include <SD.h>
+#include <FS.h>
+
+
+
+
+
+
+#define SS 34
+#define MOSI 35
+#define MISO 37
+#define SCK 36
 
 #define RXD2 16
 #define TXD2 17
+
+
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+// Variables to save date and time
+String formattedDate;
+String dayStamp;
+String timeStamp;
 
 
 //This is for the sensirion
@@ -84,7 +119,132 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 
 }
 
+void initSDCard(){
+  if (!SD.begin(SS,SPI,80000000)) {
+    Serial.println("Card Mount Failed");
+    return;
+  }
+  uint8_t cardType = SD.cardType();
 
+  if(cardType == CARD_NONE){
+    Serial.println("No SD card attached");
+    return;
+  }
+
+  Serial.print("SD Card Type: ");
+  if(cardType == CARD_MMC){
+    Serial.println("MMC");
+  } else if(cardType == CARD_SD){
+    Serial.println("SDSC");
+  } else if(cardType == CARD_SDHC){
+    Serial.println("SDHC");
+  } else {
+    Serial.println("UNKNOWN");
+  }
+  uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+  Serial.printf("SD Card Size: %lluMB\n", cardSize);
+
+  timeClient.begin();
+  // Set offset time in seconds to adjust for your timezone, for example:
+  // GMT +1 = 3600
+  // GMT +8 = 28800
+  // GMT -1 = -3600
+  // GMT 0 = 0
+  timeClient.setTimeOffset(7200);
+
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SD, "/index.html", "text/html");
+  });
+
+  server.serveStatic("/", SD, "/");
+
+  server.begin();
+}
+
+
+
+// Save reading number on RTC memory
+RTC_DATA_ATTR int readingID = 0;
+
+String dataMessage;
+// Append data to the SD card (DON'T MODIFY THIS FUNCTION)
+void appendFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Appending to file: %s\n", path);
+
+  File file = fs.open(path, FILE_APPEND);
+  if(!file) {
+    Serial.println("Failed to open file for appending");
+    return;
+  }
+  if(file.print(message)) {
+    Serial.println("Message appended");
+  } else {
+    Serial.println("Append failed");
+  }
+  file.close();
+}
+void logSDCard(    float massConcentrationPm1p0,float massConcentrationPm2p5,float massConcentrationPm4p0,float massConcentrationPm10p0,float ambientHumidity,float ambientTemperature,float vocIndex,float noxIndex, float co2 ) {
+  dataMessage = String(readingID) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
+                String(co2) + "\r\n";
+
+  //IN ORDER
+   // float massConcentrationPm1p0;
+   // float massConcentrationPm2p5;
+   // float massConcentrationPm4p0;
+   // float massConcentrationPm10p0;
+   // float ambientHumidity;
+   // float ambientTemperature;
+   // float vocIndex;
+   // float noxIndex;  
+   //float co2
+  Serial.print("Save data: ");
+  Serial.println(dataMessage);
+  appendFile(SD, "/data.csv", dataMessage.c_str());
+}
+void writeFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Writing file: %s\n", path);
+
+  File file = fs.open(path, FILE_WRITE);
+  if(!file) {
+    Serial.println("Failed to open file for writing");
+    return;
+  }
+  if(file.print(message)) {
+    Serial.println("File written");
+  } else {
+    Serial.println("Write failed");
+  }
+  file.close();
+}
+String getFormattedDate(){
+time_t epochTime = timeClient.getEpochTime();
+struct tm *ptm = gmtime ((time_t *)&epochTime);
+  int monthDay = ptm->tm_mday;
+  int currentMonth = ptm->tm_mon+1;
+  int currentYear = ptm->tm_year+1900;
+String date = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay)+ " ";
+String formattime =  timeClient.getFormattedTime();
+String myTime = date + formattime;
+return myTime;
+}
+void getTimeStamp() {
+  while(!timeClient.update()) {
+    timeClient.forceUpdate();
+  }
+  // The formattedDate comes with the following format:
+  // 2018-05-28T16:00:13Z
+  // We need to extract date and time
+  formattedDate = getFormattedDate();
+  Serial.println(formattedDate);
+
+  // Extract date
+  int splitT = formattedDate.indexOf("T");
+  dayStamp = formattedDate.substring(0, splitT);
+  Serial.println(dayStamp);
+  // Extract time
+  timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+  Serial.println(timeStamp);
+}
 
 //end
 
@@ -96,7 +256,8 @@ void setup() {
     delay(3000);
   Serial.println("Start up");  
 
-
+  SPI.begin(SCK, MISO, MOSI, SS);
+  
   //sensirion
   sen5x.begin(Wire);
 
@@ -120,7 +281,18 @@ void setup() {
   
 
   //ESP NOW
-  WiFi.mode(WIFI_STA);
+  WiFi.mode(WIFI_AP_STA);
+    // Set device as a Wi-Fi Station
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Setting as a Wi-Fi Station..");
+  }
+  initSDCard();
+
+   
+
+
     // Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
