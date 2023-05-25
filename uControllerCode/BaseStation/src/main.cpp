@@ -74,6 +74,7 @@ uint8_t broadcastAddress[] = {0x48, 0x27, 0xE2, 0x46, 0xFE, 0x12};
 String success;
 
 typedef struct struct_message {
+/*     int readingId2;
     int Second;
     int Minute;
     int Hour;
@@ -90,7 +91,8 @@ typedef struct struct_message {
     float ambientHumidity_;
     float ambientTemperature_;
     float vocIndex_;
-    float noxIndex_;   
+    float noxIndex_;    */
+    String message;
 } struct_message;
 struct_message sendingdata;
 struct_message receivedata;
@@ -176,7 +178,7 @@ void appendFile(fs::FS &fs, const char * path, const char * message) {
     Serial.println("Failed to open file for appending");
     return;
   }
-  if(file.print(message)) {
+  if(file.println(message)) {
     Serial.println("Message appended");
   } else {
     Serial.println("Append failed");
@@ -184,7 +186,7 @@ void appendFile(fs::FS &fs, const char * path, const char * message) {
   file.close();
 }
 void logSDCard(    float massConcentrationPm1p0,float massConcentrationPm2p5,float massConcentrationPm4p0,float massConcentrationPm10p0,float ambientHumidity,float ambientTemperature,float vocIndex,float noxIndex, float co2 ) {
-  dataMessage = String(readingID) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
+  dataMessage = String(readingID) + "," + String(timeStamp) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
                 String(co2) + "\r\n";
 
   //IN ORDER
@@ -201,6 +203,26 @@ void logSDCard(    float massConcentrationPm1p0,float massConcentrationPm2p5,flo
   Serial.println(dataMessage);
   appendFile(SD, "/data.csv", dataMessage.c_str());
 }
+void log2SDCard( String message ) {
+ // dataMessage = String(readingId2) + "," + String(Year) + "/" + String(Month) + "/" + String(Day) + "-" + String(Hour) + "-" + String(Minute) + "-" + String(Second) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
+ //               String(co2) + "\r\n";
+
+  //IN ORDER
+   // float massConcentrationPm1p0;
+   // float massConcentrationPm2p5;
+   // float massConcentrationPm4p0;
+   // float massConcentrationPm10p0;
+   // float ambientHumidity;
+   // float ambientTemperature;
+   // float vocIndex;
+   // float noxIndex;  
+   //float co2
+  Serial.print("Save data from other: ");
+  //Serial.println(dataMessage);
+  appendFile(SD, "/data2.csv", message.c_str());
+}
+
+
 void writeFile(fs::FS &fs, const char * path, const char * message) {
   Serial.printf("Writing file: %s\n", path);
 
@@ -319,13 +341,18 @@ void setup() {
 
 //sendingdata.co2_ = co2;
 //esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
-
+int period = 10000;
+unsigned long time_now = 0;
 
 
 void loop() {
   // put your main code here, to run repeatedly:
+
+
   if(RECEIVED == 1){
-  Serial.print("SATELLITE time: ");
+  //log2SDCard(receivedata.readingId2,receivedata.Year,receivedata.Month,receivedata.Day,receivedata.Hour,receivedata.Minute,receivedata.Second,receivedata.massConcentrationPm1p0_,receivedata.massConcentrationPm2p5_,receivedata.massConcentrationPm4p0_,receivedata.massConcentrationPm10p0_,receivedata.ambientHumidity_,receivedata.ambientTemperature_,receivedata.vocIndex_,receivedata.noxIndex_,receivedata.co2_);
+  log2SDCard(receivedata.message);
+  /* Serial.print("SATELLITE time: ");
   Serial.print(receivedata.Year);
   Serial.print("/");
   Serial.print(receivedata.Month);
@@ -384,9 +411,17 @@ void loop() {
       Serial.println("n/a");
   } else {
       Serial.println(receivedata.noxIndex_);
-  }
+  } */
+  //log2SDCard
+
   RECEIVED = 0;
   }
+
+  if(millis() >= time_now + period){
+        time_now += period;
+
+  
+
   //k30
    int co2; // Variable to store CO2 value
    int status; // Variable to store status of reading
@@ -462,7 +497,7 @@ void loop() {
             Serial.println(noxIndex);
         } */
     }    
+  }
 
-
-  delay(100); // Wait for 1 second
+  //delay(100); // Wait for 1 second
 }
