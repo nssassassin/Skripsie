@@ -9,6 +9,32 @@
 % Sensing, types of sensors
 % How the sensors work
 % Additions tech
+\section{Effects of Pollutants}
+\subsection{$\mathrm{CO_2}$}
+Exposure to $CO_2$ in concentrations as low as 1000 ppm can lead to adverse effects\cite{healthrisksco2}, this is enhanced by prolonged exposure, as would likely be experienced by the driver or passenger. 
+
+\noindent
+Adverse effects include\cite{co2effects}:
+\begin{itemize}
+	\item inflammation
+	\item reduced cognitive performance
+	\item kidney and bone problems
+\end{itemize}
+
+
+\subsection{Particulate Matter}
+Short-term exposure to particulate matter in the 2.5 and 10 $ \si{\micro\gram} $ range seems to to aggravate pre-existing conditions, such as respiratory and cardiovascular conditions \cite{pmparticles}, long term exposure is irrelevant in this context, as it is not measurable in the span of this study.
+
+
+\subsection{Volatile Organic Compounds}
+Short term exposure to VOCs can lead to eye and respiratory tract irritation, headaches, nausea and cancer\cite{safevocs}.
+The Environmental XPRT article on acceptable VOC levels in the air (2019) \cite{vocs} suggests that acceptable ranges for VOC would be between 300 to 500 $ \si{\micro\gram} $ .
+
+\subsection{$\mathrm{NO_x}$}
+Even at low concentrations, nitrogen oxides ($NO_2$, $N_{2}O_{4}$, $N_{2}O_{3}$, and $N_{2}O_{5}$) irritate the lungs and upper respiratory tract \cite{cdcitation}.
+Symptoms from exposure to $NO_2$ include inflammation of the airways, increase susceptibility to respiratory infections and to allergens as well as aggravating pre-existing lung or heart conditions. The safe amount that should not be exceeded regularly is 200$ \si{\micro\gram} $.\cite{safenox}
+
+
 
 \section{Related Work and Existing Solutions}
 \subsection{Related Work}
@@ -52,7 +78,7 @@ This sensor suite was designed for home use, it features:
 	\item Radon
 \end{itemize}
 This sensor was not intended to be extremely accurate and seems to be more for sensing danger than accurate measuring.
-It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstable}
+It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstableappc}
 
 
 
@@ -113,30 +139,7 @@ Air quality is usually reported as an index taken from various sources. We can u
 \noindent
 Typically the gases used to estimate the air quality form part of an index and are weighted. The AQI was developed by the US to communicate levels of air pollution to the public\cite{Airly}.  It is based on the levels of different pollutants in the air, such as particulate matter (PM), ozone (O3), nitrogen dioxide (NO2), sulfur dioxide (SO2) and carbon monoxide (CO). The AQI is calculated for each gas separately so it is logical to measure each and take the highest(worst) as the index value.\cite{worldairqualityranking}
 
-\pagebreak
-\section{Effects of Pollutants}
-\subsection{$\mathrm{CO_2}$}
-Exposure to $CO_2$ in concentrations as low as 1000 ppm can lead to adverse effects\cite{healthrisksco2}, this is enhanced by prolonged exposure, as would likely be experienced by the driver or passenger. 
 
-\noindent
-Adverse effects include\cite{co2effects}:
-\begin{itemize}
-	\item inflammation
-	\item reduced cognitive performance
-	\item kidney and bone problems
-\end{itemize}
-
-
-\subsection{Particulate Matter}
-Short-term exposure to particulate matter in the 2.5 and 10 $ \si{\micro\gram} $ range seems to to aggravate pre-existing conditions, such as respiratory and cardiovascular conditions \cite{pmparticles}, long term exposure is irrelevant in this context, as it is not measurable in the span of this study.
-
-
-\subsection{Volatile Organic Compounds}
-Short term exposure to VOCs can lead to eye and respiratory tract irritation, headaches, nausea and cancer\cite{safevocs}.
-The Environmental XPRT article on acceptable VOC levels in the air (2019) \cite{vocs} suggests that acceptable ranges for VOC would be between 300 to 500 $ \si{\micro\gram} $ .
-
-\subsection{$\mathrm{NO_x}$}
-Symptoms from exposure to $NO_2$ include inflammation of the airways, increase susceptibility to respiratory infections and to allergens as well as aggravating pre-existing lung or heart conditions. The safe amount that should not me exceeded regularly is 200$ \si{\micro\gram} $.\cite{safenox}
 
 
 
@@ -153,7 +156,7 @@ Symptoms from exposure to $NO_2$ include inflammation of the airways, increase s
 %\end{itemize}
 
 %\noindent With diesel creating 15\% more per gallon($3,78541\si{\liter}$), keeping this information in mind, the relevant gases should also be analysed for harm caused.
-\noindent
+%\noindent
 %As well as these parameters, on-road activities contribute to particulate matter, particularly $PM_{2.5}$ \cite{particulatematter}
 
 
