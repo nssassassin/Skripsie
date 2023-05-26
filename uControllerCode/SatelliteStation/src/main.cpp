@@ -430,7 +430,7 @@ void loop() {
 
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata)); */
   logSDCard(massConcentrationPm1p0,massConcentrationPm2p5,massConcentrationPm4p0,massConcentrationPm10p0,ambientHumidity,ambientTemperature,vocIndex,noxIndex,co2);
-
+  time_now = millis();
 
   }
   //delay(10000); // Wait for 10 seconds

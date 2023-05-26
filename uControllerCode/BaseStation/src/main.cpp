@@ -13,7 +13,7 @@
 
 // Replace with your network credentials
 const char* ssid     = "Deezwhat";
-const char* password = "deeznuts";
+const char* password = "deeznuts2";
 
 AsyncWebServer server(80);
 AsyncEventSource events("/events");
@@ -202,6 +202,7 @@ void logSDCard(    float massConcentrationPm1p0,float massConcentrationPm2p5,flo
   Serial.print("Save data: ");
   Serial.println(dataMessage);
   appendFile(SD, "/data.csv", dataMessage.c_str());
+  readingID++;
 }
 void log2SDCard( String message ) {
  // dataMessage = String(readingId2) + "," + String(Year) + "/" + String(Month) + "/" + String(Day) + "-" + String(Hour) + "-" + String(Minute) + "-" + String(Second) + "," + String(massConcentrationPm1p0) + "," + String(massConcentrationPm2p5) + "," + String(massConcentrationPm4p0) + "," + String(massConcentrationPm10p0) + "," + String(ambientHumidity) + "," + String(ambientTemperature) + "," + String(vocIndex)+ "," + String(noxIndex) + "," + 
@@ -250,8 +251,10 @@ String myTime = date + formattime;
 return myTime;
 }
 void getTimeStamp() {
-  while(!timeClient.update()) {
-    timeClient.forceUpdate();
+  if(!timeClient.update()) {
+    Serial.println("Not updated error");
+
+  //  timeClient.forceUpdate();
   }
   // The formattedDate comes with the following format:
   // 2018-05-28T16:00:13Z
@@ -264,7 +267,7 @@ void getTimeStamp() {
   dayStamp = formattedDate.substring(0, splitT);
   Serial.println(dayStamp);
   // Extract time
-  timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+  timeStamp = formattedDate;//.substring(splitT+1, formattedDate.length()-1);
   Serial.println(timeStamp);
 }
 
@@ -311,8 +314,8 @@ void setup() {
     Serial.println("Setting as a Wi-Fi Station..");
   }
   initSDCard();
-
-   
+ // timeClient.update();
+   timeClient.forceUpdate();
 
 
     // Init ESP-NOW
@@ -416,10 +419,21 @@ void loop() {
 
   RECEIVED = 0;
   }
-
+/*     if((millis()-time_now)%1 == 0){
+      getTimeStamp();
+    } */
   if(millis() >= time_now + period){
-        time_now += period;
+    Serial.println("INIT");
+    if(WiFi.status() != WL_CONNECTED){
+      Serial.println("NO wifi means no time");
+    }
+    else{
+        getTimeStamp();
+    }
+      
 
+        //time_now += period;
+//getTimeStamp();
   
 
   //k30
@@ -496,7 +510,15 @@ void loop() {
         } else {
             Serial.println(noxIndex);
         } */
-    }    
+        
+    }
+    logSDCard(massConcentrationPm1p0,massConcentrationPm2p5,massConcentrationPm4p0,massConcentrationPm10p0,ambientHumidity,ambientTemperature,vocIndex,noxIndex,co2);
+      time_now = millis();
+  }
+  else{
+  //  Serial.println(millis());
+    //Serial.println(time_now);
+
   }
 
   //delay(100); // Wait for 1 second
