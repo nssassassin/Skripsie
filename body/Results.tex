@@ -13,7 +13,7 @@
 \begin{figure}[!htb]
 	\includegraphics[width=0.45\textwidth, height = 10em]{body/fig/PM0.1.pdf}%
 	\includegraphics[width=0.45\textwidth, height = 10em]{body/fig/PM2.5.pdf}%
-	\caption{PM 0.1 (left) and PM 2.5 (right)}
+	\caption{PM 1.0 (left) and PM 2.5 (right)}
 	\label{ACEM1}
 	\includegraphics[width=0.45\textwidth, height = 10em]{body/fig/PM4.pdf}%
 	\includegraphics[width=0.45\textwidth, height = 10em]{body/fig/PM10.pdf}%
@@ -23,11 +23,12 @@
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.7\linewidth]{body/fig/PMall.pdf}
-	\caption{CO2 measurements}
+	\caption{Part}
 	\label{fig:PMall}
 \end{figure}
 
-The correlation between all of the 
+\noindent
+The correlation between all of the different types of particulate matter concentrations is rather high, as can be seen from Figure~\ref{fig:PMall}, This means we could conceivably only use the PM 2.5 reading as is the norm.
 
 
 
@@ -40,15 +41,48 @@ The correlation between all of the
 	\label{fig:co2}
 \end{figure}
 \section{Temp and Humidity}
+%\begin{figure}[!htb]
+%	\includegraphics[width=0.5\textwidth]{body/fig/Temp.pdf}%
+%	\caption{Temperature}
+%	\label{fig:temp}
+%	\includegraphics[width=0.5\textwidth]{body/fig/hum.pdf}%
+%	\captionof{figure}{Humidity}
+%	\label{fig:hum}
+%\end{figure}
 \begin{figure}[!htb]
-	\includegraphics[width=0.5\textwidth]{body/fig/Temp.pdf}%
-	\caption{Temperature}
-	\label{fig:temp}
-	\includegraphics[width=0.5\textwidth]{body/fig/hum.pdf}%
-	\captionof{figure}{Humidity}
-	\label{fig:hum}
+	\minipage{0.45\textwidth}%
+	\includegraphics[width=\textwidth]{body/fig/Temp.pdf}%
+\caption{Temperature}
+\label{fig:temp}
+	\endminipage\hfill
+	\minipage{0.45\textwidth}%
+	\includegraphics[width=\textwidth]{body/fig/hum.pdf}%
+\captionof{figure}{Humidity}
+\label{fig:hum}
+	\endminipage\hfill
+	
+	%\text{Charts provided by \cite{2007Comparison}}
 \end{figure}
 
+\section{VOC and NOx index}
+%\begin{figure}[!htb]
+%	\includegraphics[width=0.5\textwidth]{body/fig/VOC.pdf}%
+%	\caption{Temperature}
+%	\label{fig:voc}
+%	\includegraphics[width=0.5\textwidth]{body/fig/NOX.pdf}%
+%	\captionof{figure}{Humidity}
+%	\label{fig:nox}
+%\end{figure}
+\begin{figure}[!htb]
+	\minipage{0.45\textwidth}%
+	\includegraphics[width=\linewidth]{body/fig/VOC.pdf}
+	\caption{VOC}\label{fig:voc}
+	\endminipage\hfill
+	\minipage{0.45\textwidth}%
+	\includegraphics[width=\linewidth]{body/fig/NOX.pdf}
+	\caption{NOx}\label{fig:nox}
+	\endminipage\hfill
 
-
+	%\text{Charts provided by \cite{2007Comparison}}
+\end{figure}
 

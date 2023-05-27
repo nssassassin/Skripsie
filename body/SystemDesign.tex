@@ -5,8 +5,8 @@
 \vspace{-2em}
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\textwidth]{body/fig/Fulldrawio}
-	\caption{Hardware and Interface Overview \\(Base station on the left and Satellite station on the right) }
+	\includegraphics[width=0.7\textwidth]{body/fig/skripsiefull.PNG}
+	\caption{Render of design  }
 	\label{fig:fulldrawio}
 \end{figure}
 
@@ -99,14 +99,14 @@ In figure~\ref{fig:cmp} extracted from a study done regarding the performance of
 \subsection{Sensors}
 \subsubsection{$\mathrm{CO_2}$}
 For the $\mathrm{CO_2}$ sensor a sensor with at least 5000ppm measuring capability was needed, as that was the top end of exposure for AQI. It also needed a suitable interface and an acceptable power consumption and fast enough response time.
-After looking at a few options on the market, the Senseair K30 FR(Fast response) NDIR sensor was chosen. This sensor features both UART and I2C communication, has a 70mA average power consumption when powered, has a 0-5000ppm sensing capability and is a fast response sensor, meaning it does not need a fan and can the fan from the other sensor is plenty to provide the diffusion needed to enable accurate and fast sensing.
+After looking at a few options on the market, the Senseair K30 FR(Fast response) NDIR sensor was chosen. This sensor features both UART and I2C communication, has a 70mA average power consumption when powered, has a 0-5000ppm sensing capability and is a fast response sensor, meaning it does not need a fan and can use the pre-existing fan from the other sensor since it uses diffusion. This enables accurate and fast sensing.
 % why was it chosen
 \subsubsection{PM, $\mathrm{NO_x}$, VOC}
 The sensor chosen for the various needed values needed to comply to the various parameters needed to determine air quality. For the air quality index, the values indicated are VOC and PM2.5, these values needed to have a range of at least 100-700 $ \si{\micro\gram}/\si{\centi\meter^3} $ and 0-1200  $ \si{\micro\gram}/\si{\centi\meter^3} $ respectively.
 
 \noindent
 The sensor chosen is an all in one sensor, the Sensirion SEN55, it measures Temperature, Humidity, Particulate matter in the ranges 1, 2.5, 4, and 10 \si{\micro\meter}
-Both the VOC and NOx values are given as an index from a given baseline, so the information gathered from it wil be in the form of a qualitative measurement based on what would be considered to be normal values, any deviation from the baseline represents a change in air quality. The particulate matter is given in precise measurements, so that will be helpful to identify the possible types of pollutants as well.
+Both the VOC and NOx values are given as an index from a given baseline, so the information gathered from it will be in the form of a qualitative measurement based on what would be considered to be normal values, any deviation from the baseline represents a change in air quality. The particulate matter is given in precise measurements, so that will be helpful to identify the possible types of pollutants as well.
 
 
 % \usepackage{graphicx}
@@ -240,21 +240,21 @@ And for the satellite station there is one more drain of power, the ATGM336H gps
 For the intended use, remote data gathering would be done with the help of a lithium battery pack, as lithium ion /polymer batteries are energy dense and are commonly found in USB power banks. Most of the sensors and the microcontroller either have native 5V input or have a voltage regulator onboard making it ideal. To calculate the size of the battery necessary, we take the typical usage, in the case of inside the taxi being 3 hours for the morning commutes and in the case of the base station 14 hours for the full day data. This gives: $223\si{\milli\ampere} \times 14 = 3.122 \si{\ampere\hour} $ at 5V. This equates to $15.61 \si{\watt\hour}$. Typically battery bank capacity is given in $ \si{\milli\amphour} $ but this can be deceiving as it normally references the capacity of the cells in parallel with an average voltage of 3.7V not the 5V output. With the $15.61 \si{\watthour}$ needed, this would equate to a  $ 4218,9\si{\milli\amphour} $ Power bank needed. To ensure Full day usage, a typical power bank of 10000 $ \si{\milli\amphour} $ is chosen. This also ensures that, should the system need to, it would be able to provide 24 hour data.
 \pagebreak
 
-\section{Metrics}
-
-\subsection{Sensors}
-To test sensor workings I initially set up the receiver outside of my place of residence to both test the gps receiver and the sensors. The data acquired is as follows:
-
-
-
-
-\subsection{ESP-NOW}
-To test the ESP-NOW, the firmware for both the base station and the satellite station was uploaded to the respective boards, the base station being connected to the computer via serial to check the output of the device. The satellite station is then taken further and further away from the base station with each message containing the location data at the specific spot, this allows for checking of the range of the esp now to determine what the settings need to be for the calibration of when the satellite should attempt to connect to the base station to transfer data.
-
-\noindent
-That resulted in the following output:
-
-{\color{red} \huge screenshots and data on drive under skripsie files}
+%\section{Metrics}
+%
+%\subsection{Sensors}
+%To test sensor workings I initially set up the receiver outside of my place of residence to both test the gps receiver and the sensors. The data acquired is as follows:
+%
+%
+%
+%
+%\subsection{ESP-NOW}
+%To test the ESP-NOW, the firmware for both the base station and the satellite station was uploaded to the respective boards, the base station being connected to the computer via serial to check the output of the device. The satellite station is then taken further and further away from the base station with each message containing the location data at the specific spot, this allows for checking of the range of the esp now to determine what the settings need to be for the calibration of when the satellite should attempt to connect to the base station to transfer data.
+%
+%\noindent
+%That resulted in the following output:
+%
+%{\color{red} \huge screenshots and data on drive under skripsie files}
 
 
 
