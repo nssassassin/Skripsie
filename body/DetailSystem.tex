@@ -27,25 +27,29 @@ This system consists of multiple interconnecting components that will be discuss
 
 
 \noindent
-The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty seven digital pins, three SPI interfaces with two of them fully available, two i2c buses, dual hardware UARTs, a built-in WiFi radio with antenna on board. The board runs on 3.3v power, but has an onboard voltage regulator that works on 5V\cite{wemos2021s2mini}. Although the board supports multiple i2c devices, it was chosen to connect both devices to one bus since they have different addresses. This also alleviates some space in memory by not having another initialisation of the i2c library instance.
+The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty seven digital pins, three SPI interfaces with two of them fully available, two i2c buses, dual hardware UARTs, a built-in WiFi radio with antenna on board. The board runs on 3.3v power, but has an onboard voltage regulator that works on 5V. Although the board supports multiple i2c devices, it was chosen to connect both devices to one bus since they have different addresses. This also alleviates some space in memory by not having another initialisation of the i2c library instance. The board features an ultra low power co-processor capable of waking up from i2c interrupts, this could be used if deploying for longer durations. The main processor is an {Xtensa\textregistered}  32 bit Single Core Microprocessor that operates at up to 240MHz. Should this device be deployed with only internet capability in a data sensitive environment it also features cryptographic hardware accelerators. The board is also rated for extreme conditions, capable of working at up to 120 degrees Celsius\cite{wemos2021s2mini}.
+
+
+\subsection{Sensiron Sen55}
+This sensor provides 
 %The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
-\subsubsection{SD - interface}
-The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
-The FS, SD and SPI libraries from Espresiff were used to interface with the already formatted micro SD card.
+%\subsection{SD - interface}
+%The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
+%The FS, SD and SPI libraries from Espresiff were used to interface with the already formatted micro SD card.
 
 
 
-
-\subsection{Sensors}
-\subsubsection{$\mathrm{CO_2}$}
-{\color{red} \huge Insert docs you made while working with them}
-
-% why was it chosen
-
-
-\subsubsection{PM, $\mathrm{NO_x}$, VOC, Temperature, Humidity}
-\noindent
-The main ESP referenced as the Base station, will be connected periodically to the internet to send the data it collects to the database of choice. 
+%
+%\subsection{Sensors}
+%\subsubsection{$\mathrm{CO_2}$}
+%{\color{red} \huge Insert docs you made while working with them}
+%
+%% why was it chosen
+%
+%
+%\subsubsection{PM, $\mathrm{NO_x}$, VOC, Temperature, Humidity}
+%\noindent
+%The main ESP referenced as the Base station, will be connected periodically to the internet to send the data it collects to the database of choice. 
 
 \subsection{GPS}
 
