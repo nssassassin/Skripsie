@@ -7,7 +7,7 @@ This system consists of multiple interconnecting components that will be discuss
 \begin{itemize}
 	\item ESP32-S2
 	\item Sensiron Sen55
-	\item Sensair K30
+	\item Senseair K30
 	\item SD-card adapter
 	\item ATGM336H GPS module
 	\item Power bank	
@@ -34,7 +34,11 @@ The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty
 This sensor provides Particulate Matter, Relative Humidity, Temperature, VOC Index and NOx Index outputs.
 It is produced by Sensirion and uses a ACES 51452-006H0H0-001 connector interface to connect. It communicates using the i2c bus and has a library available to use to read its values, however, the NOx and VOC outputs are in the format of an index and the raw values are available but the conversion algorithm is proprietary, the index is thus used. The board uses 5v power as its VCC but communicates over i2c at 3.3V common voltage. The 5V is provided straight from the power bank in this use case.
 For the readings from the sensor, the particulate matter, relative humidity and temperature values are available immediately, with the VOC value following shortly behind. For the NOx and VOC values to be reliable, the sensor needs to be in operation for 1 hour for VOC and 6 hours for NOx. For extended use, as would be the case in the taxi rank, the sensor has a learning function on the VOC and NOx index, which is set by default as 12 hours. From this the sensor will estimate the mean gain for the previous 12 hours. The device also features a self cleaning mode, this runs once a week.
-\subsection{Sensair K30}
+
+
+\subsection{Senseair K30}
+
+
 %The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 %\subsection{SD - interface}
 %The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
