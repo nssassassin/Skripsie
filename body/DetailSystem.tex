@@ -9,13 +9,24 @@ This system consists of multiple interconnecting components that will be discuss
 	\item Sensiron Sen55
 	\item Sensair K30
 	\item SD-card adapter
-	\item 
-	\item
-	
+	\item ATGM336H GPS module
+	\item Power bank	
 \end{itemize} 
 
 
 
+
+\subsection{ESP32-S2}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\linewidth]{body/fig/s2_mini}
+	\caption{ESP32-S2 mini}
+	\label{fig:s2mini}
+\end{figure}
+
+
+
+The module used is the ESP32-S2 mini by WEMOS/Lolin. 
 %The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 \subsubsection{SD - interface}
 The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
@@ -31,7 +42,7 @@ The FS, SD and SPI libraries from Espresiff were used to interface with the alre
 % why was it chosen
 
 
-\subsubsection{PM, $\mathrm{NO_x}$, VOC,Temp, Humidity}
+\subsubsection{PM, $\mathrm{NO_x}$, VOC, Temperature, Humidity}
 \noindent
 The main ESP referenced as the Base station, will be connected periodically to the internet to send the data it collects to the database of choice. 
 
