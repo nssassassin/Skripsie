@@ -1,15 +1,39 @@
 \chapter{Detailed System Design}
-\section{ESP32}
+\section{Hardware}
 
 \subsection{Overview}
-The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 
+
+The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
+\subsubsection{SD - interface}
+The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
+The FS, SD and SPI libraries from Espresiff were used to interface with the already formatted micro SD card.
+
+
+
+
+\subsection{Sensors}
+\subsubsection{$\mathrm{CO_2}$}
+{\color{red} \huge Insert docs you made while working with them}
+
+% why was it chosen
+
+
+\subsubsection{PM, $\mathrm{NO_x}$, VOC}
 \noindent
 The main ESP referenced as the Base station, will be connected periodically to the internet to send the data it collects to the database of choice. 
 
+\pagebreak
 \subsection{Software/Firmware implementation}
 \subsubsection{Overview}
 {\color{red} \huge Insert flowchart}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{body/fig/flowchart.drawio.png}
+	\caption{Flow diagram of software implementation }
+	\label{fig:softwareoverview}
+\end{figure}
 
 \subsection{UART}
 The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most gps receivers.\cite{NMEA}
@@ -47,18 +71,4 @@ Both the Sensirion and Senseair sensors make use of the i2c bus to communicate.
 \subsection{ESP-NOW}
 
 
-\subsection{SD - interface}
-The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
-The FS, SD and SPI libraries from Espresiff were used to interface with the already formatted micro SD card.
 
-
-
-
-\section{Sensors}
-\subsection{$\mathrm{CO_2}$}
-{\color{red} \huge Insert docs you made while working with them}
-
-% why was it chosen
-
-
-\subsection{PM, $\mathrm{NO_x}$, VOC}
