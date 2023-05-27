@@ -17,16 +17,17 @@ This system consists of multiple interconnecting components that will be discuss
 
 
 \subsection{ESP32-S2}
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\linewidth]{body/fig/s2_mini}
+	\includegraphics[width=0.4\linewidth]{body/fig/s2_mini}
 	\caption{ESP32-S2 mini}
 	\label{fig:s2mini}
 \end{figure}
 
 
-
-The module used is the ESP32-S2 mini by WEMOS/Lolin. 
+\noindent
+The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty seven digital pins, three SPI interfaces with two of them fully available, two i2c buses, dual hardware UARTs, a built-in WiFi radio with antenna on board. The board runs on 3.3v power, but has an onboard voltage regulator that works on 5V\cite{wemos2021s2mini}. Although the board supports multiple i2c devices, it was chosen to connect both devices to one bus since they have different addresses. This also alleviates some space in memory by not having another initialisation of the i2c library instance.
 %The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 \subsubsection{SD - interface}
 The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
