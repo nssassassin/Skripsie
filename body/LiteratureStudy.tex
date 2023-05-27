@@ -58,12 +58,12 @@ This study analysed the environmental impact of the taxi industry in South Afric
 %the increase of taxis leads to environmental pollution and that contra-normative rules and 
 %demands in the taxi ranks led passengers to litter more in the long distance taxi ranks. 
 
-\pagebreak
+
 \subsection{Existing Solutions}
 
 \subsubsection{Aeroqual AQY}
-This sensor was used in a similar study done to determine the air quality at bus stops \cite{busstop}. 
-The sensor solution used consists of sensors for the following along with provided ranges\cite{sensoraq}:
+This sensor was used in a study aiming to measure similar metrics done to determine the air quality at bus stops \cite{busstop}. 
+The solution used consists of sensors for the following along with provided ranges\cite{sensoraq}:
 
 \begin{itemize}
 	\item Particulate matter ($PM_{2.5}$ \& $PM_{10}$) 0-1000 $ \si{\micro\gram}$
@@ -84,7 +84,7 @@ This sensor suite was designed for home use, it features:
 	\item Radon
 \end{itemize}
 This sensor was not intended to be extremely accurate and seems to be more for sensing danger than accurate measuring.
-It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstableappc}
+It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstableappc}.
 
 
 
@@ -101,8 +101,8 @@ The most common and more accurate sensor type is the NDIR sensor. Chemical senso
 VOC sensors measure volatile organic compounds in the air, such as what is found in petroleum fuels. There are three main types of sensors used to detect VOC\cite{ourpcb:vocsensor}\cite{utmel:vocsensor}:
 
 \begin{itemize}
-	\item photoionization detector (PID)
-	\item flame ionization detector (FID)
+	\item photoionisation detector (PID)
+	\item flame ionisation detector (FID)
 	\item metal oxide semiconductor sensor (MOS)
 \end{itemize}
 PID sensors uses ultraviolet light to ionize the VOC molecules and measure the electric current. They are typically used for low concentrations.
@@ -119,19 +119,19 @@ Particulate matter sensors measure the concentration and size of airborne partic
 	\item light obscuration
 	\item direct imaging
 \end{itemize}
-Light scattering is used for smaller sized particles(<1 $ \si{\micro\meter} $), while obscuration is used for larger particles\cite{thomasnet:particlesensor}. Direct imaging depends on the resolution and size of the sensor, but is usually prohibitively expensive.
+Light scattering is used for smaller sized particles (\(<1 $ \si{\micro\meter} $\)), while obscuration is used for larger particles\cite{thomasnet:particlesensor}. Direct imaging depends on the resolution and size of the sensor, but is usually prohibitively expensive.
 
-\subsubsection{$\mathrm{NO_x}$}
-${NO_x}$ sensors measure Nitrogen Oxides typically found in exhaust gases of diesel engines\cite{autolintec:noxsensor}. There are different types of ${NO_x}$ sensors\cite{drivearchive:noxsensor}:
+\subsubsection{Nitrogen Oxides}
+${NO_x}$ sensors measure are typically found in exhaust gases of diesel engines\cite{autolintec:noxsensor}. There are different types of ${NO_x}$ sensors\cite{drivearchive:noxsensor}:
 \begin{itemize}
 	\item Electrochemical
 	\item Zirconia
 \end{itemize}
 Electrochemical uses an electrolyte to create a current proportional to the concentration.
 Zirconia sensors use ceramic material and changes resistance based on concentration.
-Zirconia sensors typically run at lower temperatures and are more customizable.\cite{miura2006electrochemical}
+Zirconia sensors typically run at lower temperatures and are more customisable.\cite{miura2006electrochemical}
 
-
+\pagebreak
 \subsection{Air Quality Reporting}
 Air quality is usually reported as an index taken from various sources. We can use this standard to measure our perceived air quality of each contributing gas or particulate mater. \cite{airqualit:index} 
 
@@ -143,7 +143,7 @@ Air quality is usually reported as an index taken from various sources. We can u
 \end{figure}
 
 \noindent
-Typically the gases used to estimate the air quality form part of an index and are weighted. The AQI was developed by the US to communicate levels of air pollution to the public\cite{Airly}.  It is based on the levels of different pollutants in the air, such as particulate matter (PM), ozone (O3), nitrogen dioxide (NO2), sulfur dioxide (SO2) and carbon monoxide (CO). The AQI is calculated for each gas separately so it is logical to measure each and take the highest(worst) as the index value.\cite{worldairqualityranking}
+Typically, the gases used to estimate the air quality form part of an index and are weighted. The AQI was developed by the US to communicate levels of air pollution to the public\cite{Airly}.  It is based on the levels of different pollutants in the air, such as particulate matter (PM), ozone (O3), nitrogen dioxide (NO2), sulphur dioxide (SO2) and carbon monoxide (CO). The AQI is calculated for each gas separately so it is logical to measure each and take the highest (worst) as the index value.\cite{worldairqualityranking}
 
 
 
