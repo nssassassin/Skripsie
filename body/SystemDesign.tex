@@ -1,19 +1,30 @@
 \chapter{System Design}
 %System design with system diagram
-\vspace{-2em}
-\section{Hardware Overview}
+\vspace{-5em}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.55\textwidth]{body/fig/skripsiefull.PNG}
+	\caption{Render of design  }
+	\label{fig:render}
+\end{figure}
 \vspace{-2em}
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\textwidth]{body/fig/skripsiefull.PNG}
-	\caption{Render of design  }
+	\includegraphics[width=0.9\linewidth]{body/fig/Fulldrawio}
+	\caption{ Full overview}
 	\label{fig:fulldrawio}
 \end{figure}
-
 \vspace{-2em}
+\section{Short summary of system}
+As seen in figure~\ref{fig:fulldrawio} the system consists of two sensors, the Sensiron SEN55, and the Sensair K30, the former measuring Particulate Matter, VOC, $NO_X$, Temperature, and Humidity and the latter $CO_2$ concentration respectively. They both share the same i2c bus. The other components in the system is the SD card used to store the data, the SD card is connected via the one of the ESP32-S2's SPI buses. The satellite station features a GPS to note the difference in values for different routes, it also functions as a home beacon, allowing the controller to know when the base station is close enough so it can attempt to transmit - this also serves to reduce power consumption since the onboard WiFi chip uses considerably more power than the GPS, thus keeping the WiFi from continuously trying to connect. The microcontroller forming the heart of the system is the ESP32-S2 MINI by WEMOS. The power source for the project is a 10000$ \si{\milli\amphour} $ power bank.
+
+\section{Hardware Overview}
+
+
 \subsection{Microcontroller}
 An essential part of this project is the microcontroller, since it contains and controls many of the aspects needed for the project to work.
-Choosing a microcontroller comes down to it's features. For this project the features considered were:
+Choosing a microcontroller comes down to its features. For this project the features considered were:
 \begin{itemize}
 	\item Speed
 	\item Communication capabilities
