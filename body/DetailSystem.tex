@@ -118,11 +118,11 @@ The micro SD card adapter/module chosen is a simplistic connector, merely relayi
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{body/fig/flowchart.drawio.png}
-	\caption{Flow diagram of software implementation }
+	\caption{Flow diagram of software implementation on the base station}
 	\label{fig:softwareoverview}
 \end{figure}
 
-\subsection{UART}
+\subsubsection{GPS and UART}
 The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most GPS receivers.\cite{NMEA}
 \begin{table}[!htb]
 	\resizebox{\textwidth}{!}{%
@@ -148,12 +148,15 @@ The GPS unit uses UART Serial commands to send its data to the ESP32. The data r
 \end{table}
 
 \noindent
-This data is sent over the UART in comma delimited messages, the UART is set to default to 9600 baud.
+This data is sent over the UART in comma delimited messages, the UART is set by default to 9600 baud.
 The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
+The outputs from the GPS that are actually used are the date, time, longitude and latitude. This data is written to the sd card in the first header columns in the case of the satellite station.
 
-
-\subsection{i2c}
-Both the Sensirion and Senseair sensors make use of the i2c bus to communicate. 
+The data is then used to also find the distance between the satellite station and the coordinates set for the base station. The formula used to calculate the distance between the two was as follows:
+\begin{equation}\label{eq:distance}
+	\arccos(\sin(lat1)\times\sin(lat2)\times\cos(lat1)\times\cos(lat2)\times\cos(lon2-lon1)) \times 6371
+\end{equation}
+Where 6371 is the radius of the earth.
 
 \subsection{ESP-NOW}
 
