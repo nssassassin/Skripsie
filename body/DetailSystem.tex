@@ -161,4 +161,71 @@ Where 6371 is the radius of the earth.
 
 \subsection{ESP-NOW}
 As mentioned in the above section, the GPS coordinates determine whether when the data from the satellite station should be sent. But before the data can be sent, a few initialization steps need to take place.
-esp\_now\_init() gets called to initialize the ESP-NOW protocol, this returns ESP\_OK when done. Next the base station MAC address is written to memory and passed to the ESP-NOW handler, here the connection could be encrypted, but it is not necessary for the functionality as the data we are sending is not private. We then register the callback function that checks if the packet was sent successfully ESP\_NOW\_SEND\_SUCCESS will be returned if it was. When writing to the SD card there is a variable keeping track of the datas location, this counter serves as a means of incrementing if data has been sent before and to ensure all data was sent, if the data at receiving side is not incremental, it means we have made an error. The data sent to using the ESP-NOW protocol has a set format, it takes a struct with the format
+esp\_now\_init() gets called to initialize the ESP-NOW protocol, this returns ESP\_OK when done. Next the base station MAC address is written to memory and passed to the ESP-NOW handler, here the connection could be encrypted, but it is not necessary for the functionality as the data we are sending is not private. We then register the callback function that checks if the packet was sent successfully ESP\_NOW\_SEND\_SUCCESS will be returned if it was. When writing to the SD card there is a variable keeping track of the datas location, this counter serves as a means of incrementing if data has been sent before and to ensure all data was sent, if the data at receiving side is not incremental, it means we have made an error. The data sent to using the ESP-NOW protocol has a set format, in this case it takes a struct with the format:
+\lstset{frame=tb,
+	language=c++,
+	aboveskip=5mm,
+	belowskip=5mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{blue},
+	keywordstyle=\color{red},
+	commentstyle=\color{pink},
+	stringstyle=\color{green},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3}
+
+\begin{lstlisting}
+typedef struct struct_message {
+	int readingId2;
+	int Second;
+	int Minute;
+	int Hour;
+	int Day;
+	int Month;
+	int Year;
+	double lat_;
+	double lon_;
+	float co2_;
+	float massConcentrationPm1p0_;
+	float massConcentrationPm2p5_;
+	float massConcentrationPm4p0_;
+	float massConcentrationPm10p0_;
+	float ambientHumidity_;
+	float ambientTemperature_;
+	float vocIndex_;
+	float noxIndex_;  
+	String message;
+} struct_message;
+
+struct_message sendingdata;
+\end{lstlisting}
+\noindent
+Where this gets registered as the sent and received struct. 
+
+\noindent
+Now once all this is done, the ESP can now send data. Once the location is confirmed for the first time to be within $100 \si{\meter}$ of the base station, the following function is called:
+\begin{lstlisting}
+void sendToESP() {
+	File file = SD.open("/data.csv", FILE_READ);
+	if(!file) {
+		Serial.println("Failed to open file for reading");
+		return;
+	}
+	while (file.available())
+	{
+		String line = file.readStringUntil('\n');
+		sendingdata.message = line;
+		esp_err_t result;
+		while(result!=ESP_OK){
+			result = esp_now_send(broadcastAddress, (uint8_t *) &sendingdata, sizeof(sendingdata));
+		}
+	}
+	file.close();
+}
+\end{lstlisting}
+This function opens the file, reads the content and sends it to the base station.
+
