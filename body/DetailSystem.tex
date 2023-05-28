@@ -50,20 +50,37 @@ For the readings from the sensor, the particulate matter, relative humidity and 
 	\caption{Senseair K30 FR}
 	\label{fig:k30fr}
 \end{figure}
-The Senseair K30 FR module is an NDIR $ CO_2 $ sensor with 5000 ppm sensing range and an accuracy of 3\%. It has a rate of measurement of 2Hz and a response time of 2 seconds, but since we are not using a gas tube, the diffusion time is 20 seconds which should be appropriate for the application. The sensor has a few ways to interface with the microcontroller, it features two analog outputs of 0 to 5V and 0 to 10V respectively representing 0 to 5000 ppm. It also features UART utilizing the MODBUS protocol as well as i2c communication. The sensor runs on 5 to 14V for power and has a dedicated input for the communications voltage, allowing the microcontroller to communicate at 3.3 or 5V depending on the model. The sensor communication is done using i2c and there is a detailed document by Sensair describing the protocol. The module also features the ability to change its address, this persists through power down, this negates the issue of having two sensors with the same address conflicting in the case of default addresses. 
+The Senseair K30 FR module is an NDIR $ CO_2 $ sensor with 5000 ppm sensing range and an accuracy of 3\%. It has a rate of measurement of 2 Hz and a response time of 2 seconds, but since we are not using a gas tube, the diffusion time is 20 seconds which should be appropriate for the application. The sensor has a few ways to interface with the microcontroller, it features two analog outputs of 0 to 5V and 0 to 10V respectively representing 0 to 5000 ppm. It also features UART utilizing the MODBUS protocol as well as i2c communication. The sensor runs on 5 to 14V for power and has a dedicated input for the communications voltage, allowing the microcontroller to communicate at 3.3 or 5V depending on the model. The sensor communication is done using i2c and there is a detailed document by Sensair describing the protocol. The module also features the ability to change its address, this persists through power down, this negates the issue of having two sensors with the same address conflicting in the case of default addresses. 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\linewidth]{body/fig/i3ck30}
+	\includegraphics[width=0.6\linewidth]{body/fig/i3ck30}
 	\caption[i2c for K30]{The i2c lines SDA and SDL are defined on the factory connector as well as the G+ and G0 representing VCC 5V in this case and ground along with DVCC representing the 3.3V communications voltage.}
 	\label{fig:i3ck30}
 \end{figure}
+\pagebreak
+\subsection{ATGM336H GPS module}
 
- 
+\begin{figure}[!htb]
+	\minipage{0.4\textwidth}%
+	\includegraphics[width=\textwidth]{body/fig/NEO_M8_N_MOD_001}
+	\caption{ATGM336H}
+	\label{fig:neom8nmod001}
+	\endminipage\hfill
+	\minipage{0.4\textwidth}%
+	\includegraphics[width=\textwidth]{body/fig/GPSant.png}
+	\caption[GPS Antenna]{GPS Antenna}
+	\label{fig:gps-1ant}
+	\endminipage\hfill
+\end{figure}
+\noindent
+The GPS module chosen for the satellite station is the \href{https://www.robotics.org.za/NEO-M8N-MOD}{ATGM336H} shown in Figure~\ref{fig:neom8nmod001}, it is a small module, measuring in at only 13.1 by 15.7mm. It operates at $3.3 \si{\volt}$ and consumes only $25 \si{\milli\ampere}$ when acquiring its position for the first time, and  $20 \si{\milli\ampere}$ while tracking. It has an accuracy of 2.5 meters and an update rate of 10 Hz although 1 Hz is standard. The time to first fix for this module, referring to the time it needs to acquire an accurate location without the help of cell towers, is 26 seconds, this is also referred to as a cold start. Once it has the initial fix, it refreshes every second, and also supplies a PPS or pulse per second as a heartbeat. The module uses UART or Serial to communicate at a default Baud Rate of 9600bps. The standard it uses to communicate is NMEA0183, this will be further discussed in the software design. The module also includes a ceramic antenna, but another flat Molex Flexible GPS Antenna was used to allow the unit to not be as susceptible to bumps and outside interference.
+The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} shown in Figure~\ref{fig:gps-1ant} is the antenna used in the design, it also features greater than 74\% efficiency and is only 0.1 mm thick with an adhesive backing making it extremely easy to mount.
+
 \subsection{SD-card adapter}
 
 
 
-\subsection{ATGM336H GPS module}
+
 
 
 \subsection{Power bank}
