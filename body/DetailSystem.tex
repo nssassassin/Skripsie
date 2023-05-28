@@ -9,8 +9,7 @@ This system consists of multiple interconnecting components that will be discuss
 	\item Sensiron Sen55
 	\item Senseair K30
 	\item SD-card adapter
-	\item ATGM336H GPS module
-	\item Power bank	
+	\item ATGM336H GPS module	
 \end{itemize} 
 
 
@@ -76,6 +75,7 @@ The Senseair K30 FR module is an NDIR $ CO_2 $ sensor with 5000 ppm sensing rang
 The GPS module chosen for the satellite station is the \href{https://www.robotics.org.za/NEO-M8N-MOD}{ATGM336H} shown in Figure~\ref{fig:neom8nmod001}, it is a small module, measuring in at only 13.1 by 15.7mm. It operates at $3.3 \si{\volt}$ and consumes only $25 \si{\milli\ampere}$ when acquiring its position for the first time, and  $20 \si{\milli\ampere}$ while tracking. It has an accuracy of 2.5 meters and an update rate of 10 Hz although 1 Hz is standard. The time to first fix for this module, referring to the time it needs to acquire an accurate location without the help of cell towers, is 26 seconds, this is also referred to as a cold start. Once it has the initial fix, it refreshes every second, and also supplies a PPS or pulse per second as a heartbeat. The module uses UART or Serial to communicate at a default Baud Rate of 9600bps. The standard it uses to communicate is NMEA0183, this will be further discussed in the software design. The module also includes a ceramic antenna, but another flat Molex Flexible GPS Antenna was used to allow the unit to not be as susceptible to bumps and outside interference.
 The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} shown in Figure~\ref{fig:gps-1ant} is the antenna used in the design, it also features greater than 74\% efficiency and is only 0.1 mm thick with an adhesive backing making it extremely easy to mount.
 
+\pagebreak
 \subsection{SD-card adapter}
 \begin{figure}[!htb]
 	\centering
@@ -83,13 +83,13 @@ The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} sho
 	\caption{SD card adapter}
 	\label{fig:micro-sd-ptl-005}
 \end{figure}
+
+\noindent
 The micro SD card adapter/module chosen is a simplistic connector, merely relaying the SPI connectors from the micro SD card to the SPI pins on the microcontroller. It runs on 3.3V and features low quiescent current when not used. The SD card itself is limited by the SPI and library limitations, limiting its size to $ 32 \si{\giga\byte} $ The SD card used can be variable by design, and the limiting factor will ultimately be the size of the files on the SD card, as they have to be transferred, The 24 hour data used approximately $ 1 \si{\mega\byte} $ of storage with 8640 data points. This means the card itself will likely not be the bottleneck. 16 $ 16 \si{\giga\byte} $ card were used for this project simply because they were readily available and rather affordable.
 
 
 
 
-
-\subsection{Power bank}
 %The ESP32-S2 is capable of multiple STA and AP modes, including simultaneous broadcasting over ESP-NOW and WiFi. This is needed to be able to have the 2 ESP boards communicate and the base station be able to send the data to a database.
 %\subsection{SD - interface}
 %The SD card interface was done using SPI. The module was hard soldered to a micro SD to SD card adapter. These pins were then soldered to the ESP32's SPI and 3.3V pins.
