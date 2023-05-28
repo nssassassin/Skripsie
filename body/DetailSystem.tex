@@ -152,6 +152,7 @@ This data is sent over the UART in comma delimited messages, the UART is set by 
 The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
 The outputs from the GPS that are actually used are the date, time, longitude and latitude. This data is written to the sd card in the first header columns in the case of the satellite station.
 
+\noindent
 The data is then used to also find the distance between the satellite station and the coordinates set for the base station. The formula used to calculate the distance between the two was as follows:
 \begin{equation}\label{eq:distance}
 	\arccos(\sin(lat1)\times\sin(lat2)\times\cos(lat1)\times\cos(lat2)\times\cos(lon2-lon1)) \times 6371
