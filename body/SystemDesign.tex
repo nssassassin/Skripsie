@@ -75,9 +75,9 @@ A few common microcontroller boards available at the time of writing are compare
 			Communication       & Wifi     & 802.11b/g/n                                            & 802.11b/g/n max 65mbps                                 & 802.11b/g/n          \\
 			Expandability  / IO & I2C      & 2                                                      & 1                                                      & 2                    \\
 			& ADC      & 20 x 12bit                                             & 1 x 10 bit                                             & 8 x 17 bit           \\
-			& CAN/TWAI & X                                                      &                                                        & Needs HAT            \\
+			& CAN/TWAI & Y                                                      &                                                        & Needs HAT            \\
 			& GPIO     & 43                                                     & 17                                                     & 40                   \\
-			& UART     & X                                                      & X                                                      & X                    \\
+			& UART     & Y                                                      & Y                                                      & Y                    \\
 			Storage             &          & Micro SD and USB OTG                                   & Needs module                                           & Micro SD and USB OTG \\
 			Power draw          &          & 190mA peak when sending WiFi                           & 250mA peak                                             & 260mA at idle        \\
 			Size                &          & 34.3*25.4mm                                            & 49*26mm                                                & 60*30mm              \\
@@ -89,13 +89,13 @@ A few common microcontroller boards available at the time of writing are compare
 \end{table}
 
 \noindent
-From table~\ref{tab:my-table} the ESP32 s2-mini is power efficient, contains enough expandability to implement the necessary sensors, has wireless capabilities and is more affordable than the alternatives.
+From Table~\ref{tab:my-table} the ESP32 S2-mini is power efficient, contains enough expandability to implement the necessary sensors, has wireless capabilities and is more affordable than the alternatives.
 
 
 \subsection{ESP-NOW/WiFi}
 When considering data transfer between the basestation and satellite station, speed, power consumption and range need to be accounted for.
 According to an article done by Dani Eichhorn from thingpulse, the runtime of a typical ESP32 running on a standard $ 2.5\si{\ampere\hour} $ battery
-can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on esp-NOW, a sixfold increase \cite{wifiespnow}.
+can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on ESP-NOW, a sixfold increase \cite{wifiespnow}.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.35\linewidth]{body/fig/Comparative_Performance_Study_of_ESP-NOW_Wi-Fi_Bluetooth_Protocols_based_on_Range_Transmission_Speed_Latency_Energy_Usage_and_Barrier_Resistance}
@@ -104,13 +104,13 @@ can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 yea
 \end{figure}
 
 \noindent
-In figure~\ref{fig:cmp} extracted from a study done regarding the performance of the various wireless aspects of the esp32\cite{esprange} it can be seen that the transmission range of esp-NOW is superior to that of WiFi making it a valid option for transmission, while also keeping power consumption low. Tests will have to be done to see if the transmission speeds are fast enough to enable transmission of data when the satellite station reaches base. 
+In figure~\ref{fig:cmp} extracted from a study done regarding the performance of the various wireless aspects of the ESP32\cite{esprange} it can be seen that the transmission range of ESP-NOW is superior to that of WiFi making it a valid option for transmission, while also keeping power consumption low. Tests will have to be done to see if the transmission speeds are fast enough to enable transmission of data when the satellite station reaches base. 
 
 
 \subsection{Sensors}
 \subsubsection{$\mathrm{CO_2}$}
 For the $\mathrm{CO_2}$ sensor a sensor with at least 5000ppm measuring capability was needed, as that was the top end of exposure for AQI. It also needed a suitable interface and an acceptable power consumption and fast enough response time.
-After looking at a few options on the market, the Senseair K30 FR(Fast response) NDIR sensor was chosen. This sensor features both UART and I2C communication, has a 70mA average power consumption when powered, has a 0-5000ppm sensing capability and is a fast response sensor, meaning it does not need a fan and can use the pre-existing fan from the other sensor since it uses diffusion. This enables accurate and fast sensing.
+After looking at a few options on the market, the Senseair K30 FR (Fast response) NDIR sensor was chosen. This sensor features both UART and I2C communication, has a 70 mA average power consumption when powered, has a 0-5000 ppm sensing capability and is a fast response sensor, meaning it does not need a fan and can use the pre-existing fan from the other sensor since it uses diffusion. This enables accurate and fast sensing.
 % why was it chosen
 \subsubsection{PM, $\mathrm{NO_x}$, VOC}
 The sensor chosen for the various needed values needed to comply to the various parameters needed to determine air quality. For the air quality index, the values indicated are VOC and PM2.5, these values needed to have a range of at least 100-700 $ \si{\micro\gram}/\si{\centi\meter^3} $ and 0-1200  $ \si{\micro\gram}/\si{\centi\meter^3} $ respectively.
