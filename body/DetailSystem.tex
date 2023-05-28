@@ -77,7 +77,13 @@ The GPS module chosen for the satellite station is the \href{https://www.robotic
 The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} shown in Figure~\ref{fig:gps-1ant} is the antenna used in the design, it also features greater than 74\% efficiency and is only 0.1 mm thick with an adhesive backing making it extremely easy to mount.
 
 \subsection{SD-card adapter}
-
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\linewidth]{body/fig/MICRO-SD-PTL-005}
+	\caption{SD card adapter}
+	\label{fig:micro-sd-ptl-005}
+\end{figure}
+The micro SD card adapter/module chosen is a simplistic connector, merely relaying the SPI connectors from the micro SD card to the SPI pins on the microcontroller. It runs on 3.3V and features low quiescent current when not used. The SD card itself is limited by the SPI and library limitations, limiting its size to $ 32 \si{\giga\byte} $ The SD card used can be variable by design, and the limiting factor will ultimately be the size of the files on the SD card, as they have to be transferred, The 24 hour data used approximately $ 1 \si{\mega\byte} $ of storage with 8640 data points. This means the card itself will likely not be the bottleneck. 16 $ 16 \si{\giga\byte} $ card were used for this project simply because they were readily available and rather affordable.
 
 
 
@@ -117,7 +123,7 @@ The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} sho
 \end{figure}
 
 \subsection{UART}
-The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most gps receivers.\cite{NMEA}
+The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most GPS receivers.\cite{NMEA}
 \begin{table}[!htb]
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{|l|l|}
@@ -142,7 +148,7 @@ The GPS unit uses UART Serial commands to send its data to the ESP32. The data r
 \end{table}
 
 \noindent
-This data is sent over the uart in comma delimited messages, the uart is set to default to 9600 baud.
+This data is sent over the UART in comma delimited messages, the UART is set to default to 9600 baud.
 The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
 
 
