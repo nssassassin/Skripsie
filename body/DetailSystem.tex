@@ -160,6 +160,5 @@ The data is then used to also find the distance between the satellite station an
 Where 6371 is the radius of the earth.
 
 \subsection{ESP-NOW}
-
-
-
+As mentioned in the above section, the GPS coordinates determine whether when the data from the satellite station should be sent. But before the data can be sent, a few initialization steps need to take place.
+esp\_now\_init() gets called to initialize the ESP-NOW protocol, this returns ESP\_OK when done. Next the base station MAC address is written to memory and passed to the ESP-NOW handler, here the connection could be encrypted, but it is not necessary for the functionality as the data we are sending is not private. We then register the callback function that checks if the packet was sent successfully ESP\_NOW\_SEND\_SUCCESS will be returned if it was. When writing to the SD card there is a variable keeping track of the datas location, this counter serves as a means of incrementing if data has been sent before and to ensure all data was sent, if the data at receiving side is not incremental, it means we have made an error. The data sent to using the ESP-NOW protocol has a set format, it takes a struct with the format
