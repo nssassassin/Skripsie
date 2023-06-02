@@ -9,84 +9,27 @@
 % Sensing, types of sensors
 % How the sensors work
 % Additions tech
+
+
+
 \section{Effects of Pollutants}
 \subsection{$\mathrm{CO_2}$}
 Exposure to $CO_2$ in concentrations as low as 1000 ppm can lead to adverse effects\cite{healthrisksco2}, this is enhanced by prolonged exposure, as would likely be experienced by the driver or passenger. 
 
 \noindent
-Adverse effects include\cite{co2effects}:
-\begin{itemize}
-	\item inflammation
-	\item reduced cognitive performance
-	\item kidney and bone problems
-\end{itemize}
-
+Adverse effects include\cite{co2effects} inflammation, reduced cognitive performance, kidney and bone problems.
 
 \subsection{Particulate Matter}
-Short-term exposure to particulate matter in the 2.5 and 10 $ \si{\micro\gram} $ range seems to to aggravate pre-existing conditions, such as respiratory and cardiovascular conditions \cite{pmparticles}, long term exposure is irrelevant in this context, as it is not measurable in the span of this study.
+Short-term exposure to particulate matter in the 2.5 and 10 $ \si{\micro\meter} $ range seems to to aggravate pre-existing conditions, such as respiratory and cardiovascular conditions \cite{pmparticles}, long term exposure is irrelevant in this context, as it is not measurable in the span of this study.
 
 
 \subsection{Volatile Organic Compounds}
 Short term exposure to VOCs can lead to eye and respiratory tract irritation, headaches, nausea and cancer\cite{safevocs}.
-The Environmental XPRT article on acceptable VOC levels in the air (2019) \cite{vocs} suggests that acceptable ranges for VOC would be between 300 to 500 $ \si{\micro\gram} $ .
+The Environmental XPRT article on acceptable VOC levels in the air (2019) \cite{vocs} suggests that acceptable ranges for VOC would be between 300 to 500 $ \si{\micro\gram} / \si{\meter}^3 $ .
 
 \subsection{$\mathrm{NO_x}$}
 Even at low concentrations, nitrogen oxides ($NO_2$, $N_{2}O_{4}$, $N_{2}O_{3}$, and $N_{2}O_{5}$) irritate the lungs and upper respiratory tract \cite{cdcitation}.
-Symptoms from exposure to $NO_2$ include inflammation of the airways, increase susceptibility to respiratory infections and to allergens as well as aggravating pre-existing lung or heart conditions. The safe amount that should not be exceeded regularly is 200$ \si{\micro\gram} $.\cite{safenox}
-
-
-
-\section{Related Work and Existing Solutions}
-\subsection{Related Work}
-
-\subsubsection{Air quality at bus stops \cite{busstop}}
-This article was a case study of air quality monitoring at a bus stop in an underpass on the campus of Lancaster University. The bus stop was suspected to have high levels of air pollution due to the large number of vehicles passing through the tunnel. They used an Aeroqual AQY Micro Air Quality Station to measure the concentrations of $NO_2$, $PM_{10}$ and $PM_{2.5}$ at the bus stop. 
-This study concluded that bus stops facing the roadway had higher concentrations of particulate matter, with the distribution of the particulate matter being similar regardless of the size of the particles measured. Traffic flow also impacted in the concentrations to a statistically significant degree.
-%Shelters with an opening oriented toward the roadway were consistently observed to have higher concentrations inside the shelter than outside the shelter. In contrast, shelters oriented away from the roadway were observed to have lower concentrations inside the shelter than outside the shelter. The differences in PM concentration were statistically significant across all four sizes of particulate matter studied. Traffic flow was shown to have a significant relationship with all sizes of particulate concentration levels inside bus shelters.
-
-
-\subsubsection{Exposure to traffic air pollutants in taxicabs \cite{insidetaxismall}}
-This study reviewed the level of pollutants present inside taxi cabs(American style taxis). The article reports that the exposure studies show that traffic related air pollutants concentrations inside taxicabs are higher than their urban background. This was a research based study.
-
-%results have shown a high but variable occupational exposure of taxi drivers to TRAP inside their vehicles. However, future researches are required to study short respiratory impact of taxi drivers' exposure to TRAP inside their vehicles.  traffic related air pollutants (TRAP)
-
-\subsubsection{An investigation into the environmental impact of the taxi industry in Butterworth \cite{Environmentalimpact}}
-This study analysed the environmental impact of the taxi industry in South Africa, by surveying a fleet of taxis in Butterworth, they do simple analogue measures such as dust gauges and soil and water analysis. This study concluded that the magnitude of environmental impact caused by taxis is correlated to the size of the taxi rank as well as the size of the population.
-%This study has therefore established that the magnitude of environmental impact by taxis 
-%is related to the size of taxi rank and population, and the type of litter generated varies with 
-%the destination and distance passengers have to travel. It has also been established that 
-%the increase of taxis leads to environmental pollution and that contra-normative rules and 
-%demands in the taxi ranks led passengers to litter more in the long distance taxi ranks. 
-
-
-\subsection{Existing Solutions}
-
-\subsubsection{Aeroqual AQY}
-This sensor was used in a study aiming to measure similar metrics done to determine the air quality at bus stops \cite{busstop}. 
-The solution used consists of sensors for the following along with provided ranges\cite{sensoraq}:
-
-\begin{itemize}
-	\item Particulate matter ($PM_{2.5}$ \& $PM_{10}$) 0-1000 $ \si{\micro\gram}$
-	\item Ozone
-	\item Nitrogen Dioxide 0-500 ppb
-	\item Temperature and Relative Humidity
-	\item Dew point
-\end{itemize}
-This sensor lacks Carbon Dioxide measuring and lacks detailed specification on ranges' error.
-
-
-\subsubsection{Airthings View Plus}
-This sensor suite was designed for home use, it features:
-\begin{itemize}
-	\item Particulate matter ($PM_{2.5}$ 0-200$ \si{\micro\gram}$)
-	\item Carbon dioxide 400–5000 ppm
-	\item VOC
-	\item Radon
-\end{itemize}
-This sensor was not intended to be extremely accurate and seems to be more for sensing danger than accurate measuring.
-It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstableappc}.
-
-
+Symptoms from exposure to $NO_2$ include inflammation of the airways, increase susceptibility to respiratory infections and to allergens as well as aggravating pre-existing lung or heart conditions. The safe amount that should not be exceeded regularly is $200 \si{\micro\gram} / \si{\meter}^3 $.\cite{safenox}
 
 
 \section{Air Quality Monitoring Methods}
@@ -95,7 +38,7 @@ It does include a handy chart for what should be considered normal levels for th
 \subsubsection{Carbon Dioxide ($CO_2$)}
 %The most common and widely used sensor type is an NDIR sensor. With an electro
 There are two main types of CO2 sensors: infrared gas sensors (NDIR) and chemical gas sensors. \cite{disruptive:co2sensor}
-The most common and more accurate sensor type is the NDIR sensor. Chemical sensors typically use less power and can be smaller but are less accurate and are more prone to aging effects.
+The most common and more accurate sensor type is the NDIR sensor. Chemical sensors typically use less power and can be smaller but are less accurate and are more prone to ageing effects.
 
 \subsubsection{VOC}
 VOC sensors measure volatile organic compounds in the air, such as what is found in petroleum fuels. There are three main types of sensors used to detect VOC\cite{ourpcb:vocsensor}\cite{utmel:vocsensor}:
@@ -105,8 +48,8 @@ VOC sensors measure volatile organic compounds in the air, such as what is found
 	\item flame ionisation detector (FID)
 	\item metal oxide semiconductor sensor (MOS)
 \end{itemize}
-PID sensors uses ultraviolet light to ionise the VOC molecules and measure the electric current. They are typically used for low concentrations.
-FID sensors, are similar to PID sensors, but use a flame instead of UV light.
+PID sensors use ultraviolet light to ionise the VOC molecules and measure the electric current. They are typically used for low concentrations.
+FID sensors are similar to PID sensors, but use a flame instead of UV light.
 A MOS sensor uses a heated metal oxide film that reacts with VOC and measures the change in resistance. This sensor is typically used from low to medium concentration.\cite{ourpcb:vocsensor}\cite{utmel:vocsensor} 
 
 
@@ -119,7 +62,7 @@ Particulate matter sensors measure the concentration and size of airborne partic
 	\item light obscuration
 	\item direct imaging
 \end{itemize}
-Light scattering is used for smaller sized particles (\(<1 $ \si{\micro\meter} $\)), while obscuration is used for larger particles\cite{thomasnet:particlesensor}. Direct imaging depends on the resolution and size of the sensor, but is usually prohibitively expensive.
+Light scattering is used for smaller sized particles ($<1 \si{\micro\meter} $), while obscuration is used for larger particles\cite{thomasnet:particlesensor}. Direct imaging depends on the resolution and size of the sensor but is usually prohibitively expensive.
 
 \subsubsection{Nitrogen Oxides}
 ${NO_x}$ sensors measure are typically found in exhaust gases of diesel engines\cite{autolintec:noxsensor}. There are different types of ${NO_x}$ sensors\cite{drivearchive:noxsensor}:
@@ -128,12 +71,67 @@ ${NO_x}$ sensors measure are typically found in exhaust gases of diesel engines\
 	\item Zirconia
 \end{itemize}
 Electrochemical uses an electrolyte to create a current proportional to the concentration.
-Zirconia sensors use ceramic material and changes resistance based on concentration.
-Zirconia sensors typically run at lower temperatures and are more customisable.\cite{miura2006electrochemical}
+Zirconia sensors use ceramic material and change resistance based on concentration.
+Zirconia sensors typically run at lower temperatures and are more customisable\cite{miura2006electrochemical}.
+
+\section{Related Work and Existing Solutions}
+\subsection{Related Work}
+
+%\subsubsection{Air quality at bus stops \cite{busstop}}
+Various studies have been done to assess the air quality in and around public transport vehicles and stops. 
+McGann assessed the air quality at bus stops at an underpass on the campus of Lancaster University in the UK \cite{busstop}. The bus stop was suspected to have high levels of air pollution due to the large number of vehicles passing through the tunnel. They used an Aeroqual AQY Micro Air Quality Station to measure the concentrations of $NO_2$, $PM_{10}$ and $PM_{2.5}$ at the bus stop. 
+This study concluded that bus stops facing the roadway had higher concentrations of particulate matter, with the distribution of the particulate matter being similar regardless of the size of the particles measured. Traffic flow also impacted in the concentrations to a statistically significant degree.
+%Shelters with an opening oriented toward the roadway were consistently observed to have higher concentrations inside the shelter than outside the shelter. In contrast, shelters oriented away from the roadway were observed to have lower concentrations inside the shelter than outside the shelter. The differences in PM concentration were statistically significant across all four sizes of particulate matter studied. Traffic flow was shown to have a significant relationship with all sizes of particulate concentration levels inside bus shelters.
+
+\vspace{1em}
+\noindent
+%\subsubsection{Exposure to traffic air pollutants in taxicabs \cite{insidetaxismall}}
+Hachem et al. did a systematic review of respiratory effects on pollution effects in taxi cabs. This study reviewed the level of pollutants present inside taxi cabs (American style taxis). The article reports that the exposure studies show that traffic related air pollutants concentrations inside taxicabs are higher than their urban background\cite{insidetaxismall}. This was a research-based study.
+
+\vspace{1em}
+%results have shown a high but variable occupational exposure of taxi drivers to TRAP inside their vehicles. However, future researches are required to study short respiratory impact of taxi drivers' exposure to TRAP inside their vehicles.  traffic related air pollutants (TRAP)
+%\subsubsection{An investigation into the environmental impact of the taxi industry in Butterworth \cite{Environmentalimpact}}
+\noindent
+M. NOAH authored a study investigating the environmental impact of the taxi industry in South Africa, by surveying a fleet of taxis in Butterworth\cite{Environmentalimpact}. They do simple analogue measures such as dust gauges and soil and water analysis. This study concluded that the magnitude of environmental impact caused by taxis is correlated to the size of the taxi rank as well as the size of the population.
+%This study has therefore established that the magnitude of environmental impact by taxis 
+%is related to the size of taxi rank and population, and the type of litter generated varies with 
+%the destination and distance passengers have to travel. It has also been established that 
+%the increase of taxis leads to environmental pollution and that contra-normative rules and 
+%demands in the taxi ranks led passengers to litter more in the long distance taxi ranks. 
+
+\pagebreak
+\subsection{Existing Solutions}
+There were two solutions of note, the first of which was used in the busstop study\cite{busstop}.
+\begin{table}[!htb]
+\centering
+\resizebox{0.8\textwidth}{!}{%
+\begin{tabular}{@{}llcc@{}}
+\toprule
+                   &   & Aeroqual AQY & Airthings View Plus \\ \midrule
+Particulate matter & 1 &              &                     \\
+ & 2.5 & $  0-1000\si{\micro\gram} /   \si{\meter}^3 $ & Y, $  0-200\si{\micro\gram} /   \si{\meter}^3 $ \\
+                   & 4 &              &                     \\
+ & 10  & $    0-1000\si{\micro\gram} / \si{\meter}^3 $ &                                                 \\
+CO2                &   &              & Y, 400-5000ppm      \\
+VOC                &   &              & Y                   \\
+Nox                &   &              &                     \\
+Temp               &   &              &                     \\
+RH                 &   &              &                     \\
+Radon              &   &              & Y                   \\
+Ozone              &   &              &                     \\ \bottomrule
+\end{tabular}%
+}
+\label{tab:}
+\end{table}
+\noindent
+The first sensor lacks Carbon Dioxide measuring and lacks detailed specifications on ranges' error.
+The second sensor was not intended to be extremely accurate and seems to be more for sensing danger than accurate measuring. It does include a handy chart for what should be considered normal levels for the different sensors as seen in Figure~\ref{fig:airthingstableappc}.
+
+
 
 \pagebreak
 \subsection{Air Quality Reporting}
-Air quality is usually reported as an index taken from various sources. We can use this standard to measure our perceived air quality of each contributing gas or particulate mater. \cite{airqualit:index} 
+Air quality is usually reported as an index taken from various sources. We can use this standard to measure our perceived air quality of each contributing gas or particulate matter. \cite{airqualit:index} 
 
 \begin{figure}[!htb]
 	\centering
@@ -143,7 +141,7 @@ Air quality is usually reported as an index taken from various sources. We can u
 \end{figure}
 
 \noindent
-Typically, the gases used to estimate the air quality form part of an index and are weighted. The AQI was developed by the US to communicate levels of air pollution to the public\cite{Airly}.  It is based on the levels of different pollutants in the air, such as particulate matter (PM), ozone (O3), nitrogen dioxide (NO2), sulphur dioxide (SO2) and carbon monoxide (CO). The AQI is calculated for each gas separately so it is logical to measure each and take the highest (worst) as the index value.\cite{worldairqualityranking}
+Typically, the gases used to estimate the air quality form part of an index and are weighted. The AQI was developed by the US to communicate levels of air pollution to the public\cite{Airly}.  It is based on the levels of different pollutants in the air, such as particulate matter (PM), ozone (O3), nitrogen dioxide (NO2), sulphur dioxide (SO2) and carbon monoxide (CO). The AQI is calculated for each gas separately so it is logical to measure each and take the highest (worst) as the index value\cite{worldairqualityranking}.
 
 
 

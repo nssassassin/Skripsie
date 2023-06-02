@@ -44,7 +44,7 @@ VocIndex: 19.00,NoxIndex: 1.00
 \end{figure}
 
 \noindent
-This shows the received contents from the satellite station, as well as the size of the bytes received. This confirms the transfer system working as expected. With this confirmed, the next test was to see if the WiFi download server was working on the base station and if the data has been written to the SD card.
+This shows the received contents from the satellite station, as well as the size of the bytes received. This confirms the transfer system working as expected. With this confirmed, the next test was to see if the WiFi download server was working on the base station and if the data had been written to the SD card.
 
 \begin{figure}[!htb]
 	\minipage{0.4\textwidth}%
@@ -60,8 +60,7 @@ This shows the received contents from the satellite station, as well as the size
 \end{figure}
 
 \noindent
-From Figure~\ref{fig:datacsvshow} it can be seen that the data was accessible from the web portal when connected to the WiFi access point.
-\pagebreak
+In order to access the data locally, if a database or API was not set up, the ESP32-S2 hosts a file server that grants access to all the files on the SD card. The HTML file for the server is also located on the SD card. When the user wishes to view the data for the various stations, they go to the base IP address as designated by the router attached, type forward slash $<$File Name$>$ -in the case of the base station and first satellite this would be data.csv and data1.csv. As seen in Figure~\ref{fig:datacsvshow} the data was accessible from the web portal when connected to the WiFi access point.
 
 \begin{figure}[!htb]
 	\centering
@@ -71,7 +70,7 @@ From Figure~\ref{fig:datacsvshow} it can be seen that the data was accessible fr
 \end{figure}
 
 \noindent
-When measuring the speed of the download using the local network, the data was downloaded at about 270 kB/s, this would mean a days data would take about four seconds to download. This means the system is capable of providing data to an outside entity at sufficient speeds should it need to, like a database.
+When measuring the speed of the download using the local network, the data was downloaded at about 270 kB/s, this would mean a day's data would take about four seconds to download. This means the system is capable of providing data to an outside entity at sufficient speeds should it need to, like a database.
 
 
 %First say what you are looking at. Then say what yo get from figure
@@ -81,42 +80,64 @@ When measuring the speed of the download using the local network, the data was d
 %\end{figure}
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{body/fig/PMall.pdf}
-	\caption{Particulate Matter graph of 7000 data points at all concentrations measured.}
+	\includegraphics[width=0.9\linewidth]{body/fig/PMall2.0.pdf}
+	\caption[Particulate Matter]{Particulate Matter graph of 7000 data points at all concentrations measured.}
 	\label{fig:PMall}
 \end{figure}
 
 \noindent
-The correlation between all of the different sizes of particulate matter concentrations is rather high, as can be seen from Figure~\ref{fig:PMall}, This means we could conceivably only use the PM 2.5 reading as is the norm. The rough timing of the chart is late afternoon to next day, with the elevated period in the middle representing the evening.
-The peaks at the start are the testing of the sensor with various methods while it was on my desk.
+In order to see if the data was reliable, the devices were set up in a stationary spot for nearly 24 hours. After the initial settling times for all the measurements, both stations showed nearly identical graphs, this marked the data as relatively reliable.
+The correlation between all the different sizes of particulate matter concentrations was rather high, as can be seen from Figure~\ref{fig:PMall}, this means that conceivably only  the PM 2.5 reading could be used to indicate the quality as is the norm in the industry. The rough timing of the chart is late afternoon to the next day, with the elevated period in the middle representing the evening.
+The peaks at the start are the testing of the sensor with various methods while it was on the testing desk.
+In order to test the various sensors, pure CO2 from a small CO2 gas canister was used to test if the sensor was responding with relative accuracy and in a timely manner.
 
-\pagebreak
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\linewidth]{body/fig/CO2}
+	\includegraphics[width=0.7\linewidth]{body/fig/CO22.0.pdf}
 	\caption{CO2 measurements}
 	\label{fig:co2}
 \end{figure}
 
 \noindent
-In Figure~\ref{fig:co2} the CO2 concentration is shown for the same time period, here the concentration is much more discernable, with the CO2 remaining consistent and lowering through the night as lighter breathing and less activity realises a slight less steep than the initial start, the dips in-between are when there was no one inside the testing area.
+In Figure~\ref{fig:co2} the CO2 concentration is shown for the same period. The CO2 reading is much more consistent and is also much quicker to respond and settle, it has a near instant response to elevated levels and could be a good indicator of immediate air quality loss.%here the concentration is much more discernable, with the CO2 remaining consistent and lowering through the night as lighter breathing and less activity realises a slightly less steep than the initial start, the dips in-between are when there was no one inside the testing area.
 
 
 \begin{figure}[!htb]
 	\minipage{0.45\textwidth}%
-	\includegraphics[width=\linewidth]{body/fig/VOC.pdf}
+	\includegraphics[width=\linewidth]{body/fig/VOC2.0.pdf}
 	\caption{VOC}\label{fig:voc}
 	\endminipage\hfill
 	\minipage{0.45\textwidth}%
-	\includegraphics[width=\linewidth]{body/fig/NOX.pdf}
+	\includegraphics[width=\linewidth]{body/fig/NOX2.0.pdf}
 	\caption{NOx}\label{fig:nox}
 	\endminipage\hfill
 
 \end{figure}
 
 \noindent
-VOC and NOx readings spiked along with the other test samples and as mentioned in the section, the NOx readings only become viable after a few hours, with it also only moving up a few index point, leading the the jagged graph.
+VOC and NOx readings spiked along with the other test samples and as mentioned in the section, the NOx readings only become viable after a few hours, with it also moving up a few index points, leading to the jagged graph.
 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.7\linewidth]{body/fig/complete .png}
+	\caption{Completed project}
+	\label{fig:compl}
+\end{figure}
+\noindent
+The completed project is pictured in Figure~\ref{fig:compl}.
+The battery percentage of the base unit with constant WiFi access, which added a minimum of $95 \si{\milli\ampere}$ usage to the module, after 24 hours of usage was 31\%. This means the average usage of the unit was as follows:
+\begin{displaymath}
+    10000\si{\milli\amphour} \times 3.7\si{\volt} \times (100-31) \div 24\si{\hour} = 1.063\si{\watt}
+\end{displaymath}
+In terms of the current usage, as was defined in the initial design, that would be:
+\begin{displaymath}
+    1.063\si{\watt} \div 5\si{\volt} = 212\si{\milli\ampere}
+\end{displaymath}
+\noindent
+Which is close to the value calculated, even with constant WiFi usage, meaning the system is more efficient than initially designed.
+In the field, the WiFi would not be constantly accessed or connected. Only when transferring ESP-NOW messages and when sending the data to a given database, this reduces the consumption.
 
 %\begin{figure}[!htb]
 %	\minipage{0.45\textwidth}%

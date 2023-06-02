@@ -11,7 +11,7 @@
 \vspace{-2em}
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{body/fig/Fulldrawio}
+	\includegraphics[width=\linewidth]{body/fig/Betterdiagram.png}
 	\caption{ Full overview}
 	\label{fig:fulldrawio}
 \end{figure}
@@ -37,56 +37,38 @@ Choosing a microcontroller comes down to its features. For this project the feat
 
 \noindent
 A few common microcontroller boards available at the time of writing are compared in the table below along with their respective specifications:
-
-
-
-% \usepackage{tabularray}
 \begin{table}[!htb]
-	\centering
- 
-	\resizebox{\linewidth}{!}{%
-		\begin{tblr}{
-				cell{3}{3} = {c},
-				cell{3}{4} = {c},
-				cell{3}{5} = {c},
-				cell{4}{3} = {c},
-				cell{4}{4} = {c},
-				cell{4}{5} = {c},
-				cell{5}{3} = {c},
-				cell{5}{4} = {c},
-				cell{5}{5} = {c},
-				cell{6}{3} = {c},
-				cell{6}{4} = {c},
-				cell{6}{5} = {c},
-				cell{7}{3} = {c},
-				cell{7}{4} = {c},
-				cell{7}{5} = {c},
-				cell{8}{3} = {c},
-				cell{8}{4} = {c},
-				cell{8}{5} = {c},
-				vline{1,6} = {1-4,9-12}{},
-				vline{1-2,6} = {5-8}{},
-				hline{1-4,9-13} = {-}{},
-				hline{5} = {1,3-5}{},
-				hline{6-8} = {3-5}{},
-			}
-			&          & ESP32-S2 lolin  mini                                   & ESP8266 NodeMCU                                        & Raspberry Pi Zero W  \\
-			Speed               &          & {Tensilica Xtensa LX7 32 bit \\  Single-Core @ 240Mhz} & {Tensilica LX106 32 bit \\ @ 80 MHz (up to   160 MHz)} & BCM2835 1GHz         \\
-			Communication       & Wifi     & 802.11b/g/n                                            & 802.11b/g/n max 65mbps                                 & 802.11b/g/n          \\
-			Expandability  / IO & I2C      & 2                                                      & 1                                                      & 2                    \\
-			& ADC      & 20 x 12bit                                             & 1 x 10 bit                                             & 8 x 17 bit           \\
-			& CAN/TWAI & Y                                                      &                                                        & Needs HAT            \\
-			& GPIO     & 43                                                     & 17                                                     & 40                   \\
-			& UART     & Y                                                      & Y                                                      & Y                    \\
-			Storage             &          & Micro SD and USB OTG                                   & Needs module                                           & Micro SD and USB OTG \\
-			Power draw          &          & 190mA peak when sending WiFi                           & 250mA peak                                             & 260mA at idle        \\
-			Size                &          & 34.3*25.4mm                                            & 49*26mm                                                & 60*30mm              \\
-			Cost                &          & R99                                                    & R94                                                    & R320.85              
-		\end{tblr}
-	}
-	\caption{Microcontroller option and Specifications}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+                    &          & ESP32-S2 lolin  mini           & ESP8266 NodeMCU                & Raspberry Pi Zero W            \\ \midrule
+Speed &
+   &
+  \begin{tabular}[c]{@{}l@{}}Tensilica Xtensa LX7 32 bit\\ Single-Core @ 240Mhz\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Tensilica LX106 32 bit\\ @ 80 MHz (up to 160 MHz)\end{tabular} &
+  BCM2835 1GHz \\
+Communication &
+  Wifi &
+  \multicolumn{1}{c}{802.11b/g/n} &
+  \multicolumn{1}{c}{802.11b/g/n max 65mbps} &
+  \multicolumn{1}{c}{802.11b/g/n} \\
+Expandability  / IO & I2C      & \multicolumn{1}{c}{2}          & \multicolumn{1}{c}{1}          & \multicolumn{1}{c}{2}          \\
+                    & ADC      & \multicolumn{1}{c}{20 x 12bit} & \multicolumn{1}{c}{1 x 10 bit} & \multicolumn{1}{c}{8 x 17 bit} \\
+                    & CAN/TWAI & \multicolumn{1}{c}{Y}          & \multicolumn{1}{c}{}           & \multicolumn{1}{c}{Needs HAT}  \\
+                    & GPIO     & \multicolumn{1}{c}{43}         & \multicolumn{1}{c}{17}         & \multicolumn{1}{c}{40}         \\
+                    & UART     & \multicolumn{1}{c}{Y}          & \multicolumn{1}{c}{Y}          & \multicolumn{1}{c}{Y}          \\
+Storage             &          & Micro SD and USB OTG           & Needs module                   & Micro SD and USB OTG           \\
+Power draw          &          & 190mA peak when sending WiFi   & 250mA peak                     & 260mA at idle                  \\
+Size                &          & 34.3*25.4mm                    & 49*26mm                        & 60*30mm                        \\
+Cost                &          & R99                            & R94                            & R320.85                        \\ \bottomrule
+\end{tabular}%
+}
+	\caption{Microcontroller option and specifications}
 	\label{tab:my-table}
 \end{table}
+
+
+
 
 \noindent
 From Table~\ref{tab:my-table} the ESP32 S2-mini is power efficient, contains enough expandability to implement the necessary sensors, has wireless capabilities and is more affordable than the alternatives.
@@ -94,7 +76,7 @@ From Table~\ref{tab:my-table} the ESP32 S2-mini is power efficient, contains eno
 
 \subsection{ESP-NOW/WiFi}
 When considering data transfer between the basestation and satellite station, speed, power consumption and range need to be accounted for.
-According to an article done by Dani Eichhorn from thingpulse, the runtime of a typical ESP32 running on a standard $ 2.5\si{\ampere\hour} $ battery
+According to an article done by Dani Eichhorn from thingpulse, the runtime of a typical ESP32 running on a standard $ 2.5\si{\amphour} $ battery
 can be increased from an estimated 6.9 months on a WiFi gateway to up to 3.7 years on ESP-NOW, a sixfold increase \cite{wifiespnow}.
 \begin{figure}[!htb]
 	\centering
@@ -119,138 +101,80 @@ The sensor chosen for the various needed values needed to comply to the various 
 The sensor chosen is an all in one sensor, the Sensirion SEN55, it measures Temperature, Humidity, Particulate matter in the ranges 1, 2.5, 4, and 10 \si{\micro\meter}
 Both the VOC and NOx values are given as an index from a given baseline, so the information gathered from it will be in the form of a qualitative measurement based on what would be considered to be normal values, any deviation from the baseline represents a change in air quality. The particulate matter is given in precise measurements, so that will be helpful to identify the possible types of pollutants as well.
 
-
-% \usepackage{graphicx}
-% \usepackage{multirow}
+% Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-% \usepackage{colortbl}
-
-
+% \usepackage{graphicx}
 \begin{table}[!htb]
-	\centering
-	\setlength{\extrarowheight}{0pt}
-	\addtolength{\extrarowheight}{\aboverulesep}
-	\addtolength{\extrarowheight}{\belowrulesep}
-	\setlength{\aboverulesep}{0pt}
-	\setlength{\belowrulesep}{0pt}
-
-	\resizebox{\linewidth}{!}{%
-		\begin{tabular}{|l|l|l|l|l|} 
-			\toprule
-			\rowcolor[rgb]{0.749,0.749,0.749} \multicolumn{1}{|l}{Parameter} & \multicolumn{1}{l}{Conditions} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{Value} & Units \\ 
-			\midrule
-			Mass concentration specified range & \multicolumn{2}{l|}{-} & 0 to 1000 & ug/m3 \\ 
-			\midrule
-			\multirow{4}{*}{Mass concentration size range} & \multicolumn{2}{l|}{PM1.0} & 0.3 to 1.0 & um \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{PM2 5} & 0.3 to 2.5 & um \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{PM4} & 0.3 to 4.0 & um \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{PM10} & 0.3 to 10.0 & um \\ 
-			\midrule
-			\multirow{2}{*}{Mass concentration precision for   PM1 and PM2.5} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±5 ug/m3 AND 5 \% m.v. &  \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±10 & \% m.v. \\ 
-			\midrule
-			\multirow{2}{*}{Mass concentration precision2,3   for PW, PM105} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±25 & ug/m3 \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±25 & \% m.v. \\ 
-			\midrule
-			\multirow{2}{*}{Maximum long-term mass   concentration precision limit drift} & \multicolumn{2}{l|}{0 to 100 ug/m3} & ±1 25 & ug/m3 / year \\ 
-			\cmidrule(lr){2-5}
-			& \multicolumn{2}{l|}{100 to 1000 ug/m3} & ±1 25 & \% m.v. / year \\ 
-			\midrule
-			\multirow{3}{*}{Typical start-up time} & \multirow{3}{*}{number concentration} & 200 - 3000 \#/cm3 & 8 & s \\ 
-			\cmidrule(lr){3-5}
-			&  & 100 -200 \#/cm3 & 16 & s \\ 
-			\cmidrule(lr){3-5}
-			&  & 50 — 100 \#/cm3 & 30 & s \\ 
-			\midrule
-			Sensor output characteristics & \multicolumn{2}{l|}{PM2.5 mass concentration} & \multicolumn{2}{l|}{Calibrated to TSI DustTrak\{TM\} DRX   8533 Ambient Mode} \\ 
-			\midrule
-			Additional T-dependent mass   precision limit drift & temperature difference to 25C & typ. & ±05 & \% m.v./ oc \\ 
-			\midrule
-			Laser wavelength (DIN EN 60825-1   Class 1) & \multicolumn{2}{l}{typ} & 660 & nm \\
-			\bottomrule
-		\end{tabular}
-	}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Parameter & Conditions &  & Value & Units \\ \midrule
+Mass concentration specified range & - &  & 0 to 1000 & ug/m3 \\
+Mass concentration size range & PM1.0 &  & 0.3 to 1.0 & um \\
+ & PM2 5 &  & 0.3 to 2.5 & um \\
+ & PM4 &  & 0.3 to 4.0 & um \\
+ & PM10 &  & 0.3 to 10.0 & um \\
+Mass concentration precision for   PM1 and PM2.5 & 0 to 100 ug/m3 &  & ±5 ug/m3 AND 5 \% m.v. &  \\
+ & 100 to 1000 ug/m3 &  & ±10 & \% m.v. \\
+Mass concentration precision2,3   for PW, PM105 & 0 to 100 ug/m3 &  & ±25 & ug/m3 \\
+ & 100 to 1000 ug/m3 &  & ±25 & \% m.v. \\
+Maximum long-term mass   concentration precision limit drift & 0 to 100 ug/m3 &  & ±1 25 & ug/m3 / year \\
+ & 100 to 1000 ug/m3 &  & ±1 25 & \% m.v. / year \\
+Typical start-up time &  & 200 - 3000 \#/cm3 & 8 & s \\
+ & number concentration & 100 -200 \#/cm3 & 16 & s \\
+ &  & 50 — 100 \#/cm3 & 30 & s \\
+Sensor output characteristics & PM2.5 mass concentration &  & \multicolumn{2}{l}{\begin{tabular}[c]{@{}l@{}}Calibrated to TSI DustTrak\\ \{TM\} DRX   8533 \\ Ambient Mode\end{tabular}} \\
+Additional T-dependent mass   precision limit drift & temperature difference to 25C & typ. & ±05 & \% m.v./ oc \\
+Laser wavelength (DIN EN 60825-1   Class 1) & typ &  & 660 & nm \\ \bottomrule
+\end{tabular}%
+}
 	\caption{Particulate matter sensor specifications \cite{sen55}}
 	\label{tab:prtmat}
 \end{table}
 
 
+
+
 \noindent As seen in table~\ref{tab:prtmat} \cite{sen55} the precision attained is more than adequate for our measuring purposes.
-
-
-\definecolor{Silver}{rgb}{0.752,0.752,0.752}
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
 \begin{table}[!htb]
-	\centering
-
-	\resizebox{\linewidth}{!}{%
-		\begin{tblr}{
-				row{1} = {Silver},
-				cell{2}{1} = {r=14}{c},
-				cell{2}{2} = {r=3}{},
-				cell{2}{4} = {c},
-				cell{2}{7} = {r=14}{},
-				cell{3}{4} = {c},
-				cell{4}{4} = {c},
-				cell{5}{2} = {r=3}{},
-				cell{5}{4} = {c},
-				cell{6}{4} = {c},
-				cell{7}{4} = {c},
-				cell{8}{2} = {r=2}{},
-				cell{8}{4} = {c},
-				cell{9}{4} = {c},
-				cell{10}{2} = {r=3}{},
-				cell{10}{4} = {c},
-				cell{11}{4} = {c},
-				cell{12}{4} = {c},
-				cell{13}{2} = {r=3}{},
-				cell{13}{4} = {c},
-				cell{14}{4} = {c},
-				cell{15}{4} = {c},
-				vlines,
-				hline{1,16} = {-}{0.08em},
-				hline{2} = {-}{0.05em},
-				hline{3-4,6-7,9,11-12,14-15} = {3}{l},
-				hline{3-4,6-7,9,11-12,14-15} = {4-5}{},
-				hline{3-15} = {6}{r},
-				hline{5,8,10,13} = {2}{l},
-				hline{5,8,10,13} = {3-5}{},
-			}
-			Parameter & Conditions &  & Min & Typ & Max & Unit\\
-			Average supply current & Idle Mode (first 10 seconds) & SEN55 & - & 3.8 & 4.2 & mA\\
-			&  & SEN54 & - & 7 & 1 & \\
-			&  & SEN50 & - & 0.7 & 1 & \\
-			& Idle Mode (after first 10 seconds) & SEN55 & - & 2.6 & 3 & \\
-			&  & SEN54 & - & 0.7 & 1 & \\
-			&  & SEN50 & - & 0.7 & 1 & \\
-			& RHT/Gas-only Measurement Mode & SEN55 & - & 6.8 & 8 & \\
-			&  & SEN54 & - & 6.5 & 7.7 & \\
-			& Measurement-Mode (first 60   seconds) & SEN55 & - & 70 & 100 & \\
-			&  & SEN54 & - & 70 & 100 & \\
-			&  & SEN50 & - & 70 & 100 & \\
-			& Measurement-Mode   (after first 60 seconds) & SEN55 & - & 63 & 80 & \\
-			&  & SEN54 & - & 63 & 80 & \\
-			&  & SEN50 & - & 63 & 80 & 
-		\end{tblr}
-	}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+Parameter              & Conditions                                  &       & Min & Typ & Max & Unit \\ \midrule
+Average supply current & Idle Mode (first 10 seconds)                & SEN55 & -   & 3.8 & 4.2 &      \\
+                       &                                             & SEN54 & -   & 7   & 1   &      \\
+                       &                                             & SEN50 & -   & 0.7 & 1   &      \\
+                       & Idle Mode (after first 10 seconds)          & SEN55 & -   & 2.6 & 3   &      \\
+                       &                                             & SEN54 & -   & 0.7 & 1   &      \\
+                       &                                             & SEN50 & -   & 0.7 & 1   &      \\
+                       & RHT/Gas-only Measurement Mode               & SEN55 & -   & 6.8 & 8   & mA   \\
+                       &                                             & SEN54 & -   & 6.5 & 7.7 &      \\
+                       & Measurement-Mode (first 60   seconds)       & SEN55 & -   & 70  & 100 &      \\
+                       &                                             & SEN54 & -   & 70  & 100 &      \\
+                       &                                             & SEN50 & -   & 70  & 100 &      \\
+                       & Measurement-Mode   (after first 60 seconds) & SEN55 & -   & 63  & 80  &      \\
+                       &                                             & SEN54 & -   & 63  & 80  &      \\
+                       &                                             & SEN50 & -   & 63  & 80  &      \\ \bottomrule
+\end{tabular}%
+}
 	\caption{Current draw \cite{sen55}}
 	\label{tab:powercons}
 \end{table}
+
+
 
 \noindent Table~\ref{tab:powercons} \cite{sen55} contains the power requirements for all of these sensors, with the average being 63mA at 5V for typical use.
 
 \subsection{Power}
 From the previous section the power usage on average was found to be $ 70 +  63 = 133\si{\milli\ampere}$ consumption for the sensors alone. Depending on the draw from the ESP32 the consumption total would average around $ 70 +  63 + 90 = 223\si{\milli\ampere}$\cite{wifiespnow}.
-And for the satellite station there is one more drain of power, the ATGM336H GPS, with average power consumption of 20 mA\cite{atgm336h} bringing the satellite station to 243mA .
+And for the satellite station there is one more drain of power, the ATGM336H GPS, with average power consumption of 20mA\cite{atgm336h} bringing the satellite station to 243mA.
 %
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\linewidth]{body/fig/bank}
+	\includegraphics[width=0.4\linewidth]{body/fig/bank}
 	\caption{Power bank chosen}
 	\label{fig:bank}
 \end{figure}

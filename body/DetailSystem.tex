@@ -1,4 +1,4 @@
-\chapter{Detailed System Design}
+\chapter{Detailed Design}
 \vspace{-2em}
 \section{Hardware}
 
@@ -26,7 +26,7 @@ This system consists of multiple interconnecting components that will be discuss
 
 
 \noindent
-The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty seven digital pins, three SPI interfaces with two of them fully available, two i2c buses, dual hardware UARTs, a built-in WiFi radio with antenna on board. The board runs on 3.3v power, but has an onboard voltage regulator that works on 5V. Although the board supports multiple i2c devices, it was chosen to connect both devices to one bus since they have different addresses. This also alleviates some space in memory by not having another initialisation of the i2c library instance. The board features an ultra low power co-processor capable of waking up from i2c interrupts, this could be used if deploying for longer durations. The main processor is an {Xtensa\textregistered}  32 bit Single Core Microprocessor that operates at up to 240MHz. Should this device be deployed with only internet capability in a data sensitive environment it also features cryptographic hardware accelerators. The board features native support for USB and does not need a serial bus bridge, making debugging much easier. It is also rated for extreme conditions, capable of working at up to 120 degrees Celsius\cite{wemos2021s2mini}.
+The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty seven digital pins, three SPI interfaces with two of them fully available, two I2I buses, dual hardware UARTs, a built-in WiFi radio with antenna on board. The board runs on 3.3v power, but has an onboard voltage regulator that works on 5V. Although the board supports multiple I2C devices, it was chosen to connect both devices to one bus since they have different addresses. This also alleviates some space in memory by not having another initialisation of the I2C library instance. The board features an ultra low power co-processor capable of waking up from I2C interrupts, this could be used if deploying for longer durations. The main processor is an {Xtensa\textregistered}  32 bit Single Core Microprocessor that operates at up to 240MHz. Should this device be deployed with only internet capability in a data sensitive environment it also features cryptographic hardware accelerators. The board features native support for USB and does not need a serial bus bridge, making debugging much easier. It is also rated for extreme conditions, capable of working at up to 120 degrees Celsius\cite{wemos2021s2mini}.
 
 
 \subsection{Sensirion SEN55}
@@ -38,24 +38,27 @@ The module used is the ESP32-S2 mini by WEMOS/Lolin. This module features thirty
 \end{figure}
 \noindent
 This sensor provides Particulate Matter, Relative Humidity, Temperature, VOC Index and NOx Index outputs.
-It is produced by Sensirion and uses a ACES 51452-006H0H0-001 connector interface to connect. It communicates using the i2c bus and has a library available to use to read its values, however, the NOx and VOC outputs are in the format of an index and the raw values are available but the conversion algorithm is proprietary, the index is thus used. The board uses 5v power as its VCC but communicates over i2c at 3.3V common voltage. The 5V is provided straight from the power bank in this use case.
-For the readings from the sensor, the particulate matter, relative humidity and temperature values are available immediately, with the VOC value following shortly behind. For the NOx and VOC values to be reliable, the sensor needs to be in operation for 1 hour for VOC and 6 hours for NOx. For extended use, as would be the case in the taxi rank, the sensor has a learning function on the VOC and NOx index, which is set by default as 12 hours. From this the sensor will estimate the mean gain for the previous 12 hours. The device also features a self cleaning mode, this runs once a week.
+It is produced by Sensirion and uses a ACES 51452-006H0H0-001 connector interface to connect. It communicates using the I2C bus and has a library available to use to read its values, however, the NOx and VOC outputs are in the format of an index and the raw values are available but the conversion algorithm is proprietary, the index is thus used. The board uses 5v power as its VCC but communicates over I2C at 3.3V common voltage. The 5V is provided straight from the power bank in this use case.
+For the readings from the sensor, the particulate matter, relative humidity and temperature values are available immediately, with the VOC value following shortly behind. For the NOx and VOC values to be reliable, the sensor needs to be in operation for 1 hour for VOC and 6 hours for NOx. For extended use, as would be the case in the taxi rank, the sensor has a learning function on the VOC and NOx index, which is set by default as 12 hours. From this the sensor will estimate the mean gain for the previous 12 hours. The device also features a self-cleaning mode, which runs once a week.
 
 
-\subsection{Senseair K30}
+\subsection{Senseair K30 FR}
 \begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\linewidth]{body/fig/k30fr}
-	\caption{Senseair K30 FR}
-	\label{fig:k30fr}
+	\begin{subfigure}{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{body/fig/k30fr}
+    	\caption{Senseair K30 FR}
+    	\label{fig:k30fr}	    
+	\end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{body/fig/i3ck30}
+    	\caption{I2C diagram for K30}
+    	\label{fig:i3ck30}   
+    \end{subfigure}
+
+ \caption[Senseair K30]{The I2C lines SDA and SDL are defined on the factory connector as well as the G+ and G0 representing VCC 5V in this case and ground along with DVCC representing the 3.3V communications voltage.}
 \end{figure}
-The Senseair K30 FR module is an NDIR $ CO_2 $ sensor with 5000 ppm sensing range and an accuracy of 3\%. It has a rate of measurement of 2 Hz and a response time of 2 seconds, but since we are not using a gas tube, the diffusion time is 20 seconds which should be appropriate for the application. The sensor has a few ways to interface with the microcontroller, it features two analog outputs of 0 to 5V and 0 to 10V respectively representing 0 to 5000 ppm. It also features UART utilizing the MODBUS protocol as well as i2c communication. The sensor runs on 5 to 14V for power and has a dedicated input for the communications voltage, allowing the microcontroller to communicate at 3.3 or 5V depending on the model. The sensor communication is done using i2c and there is a detailed document by Sensair describing the protocol. The module also features the ability to change its address, this persists through power down, this negates the issue of having two sensors with the same address conflicting in the case of default addresses. 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\linewidth]{body/fig/i3ck30}
-	\caption[i2c for K30]{The i2c lines SDA and SDL are defined on the factory connector as well as the G+ and G0 representing VCC 5V in this case and ground along with DVCC representing the 3.3V communications voltage.}
-	\label{fig:i3ck30}
-\end{figure}
+The Senseair K30 FR module shown in Figure~\ref{fig:k30fr} is an NDIR $ CO_2 $ sensor with 5000 ppm sensing range and an accuracy of 3\%. It has a rate of measurement of 2 Hz and a response time of 2 seconds, but since we are not using a gas tube, the diffusion time is 20 seconds which should be appropriate for the application. The sensor has a few ways to interface with the microcontroller, it features two analogue outputs of 0 to 5V and 0 to 10V respectively representing 0 to 5000 ppm. It also features UART utilizing the MODBUS protocol as well as I2C communication. The sensor runs on 5 to 14V for power and has a dedicated input for the communications voltage, allowing the microcontroller to communicate at 3.3 or 5V depending on the model. The sensor communication is done using I2C and there is a detailed document by Sensair describing the protocol. The module also features the ability to change its address, this persists through power down, this negates the issue of having two sensors with the same address conflicting in the case of default addresses. 
+
 \pagebreak
 \subsection{ATGM336H GPS module}
 
@@ -79,13 +82,13 @@ The \href{https://www.robotics.org.za/GPS-15246?search=antenna}{GPS Antenna} sho
 \subsection{SD-card adapter}
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.5\linewidth]{body/fig/MICRO-SD-PTL-005}
+	\includegraphics[width=0.3\linewidth]{body/fig/MICRO-SD-PTL-005}
 	\caption{SD card adapter}
 	\label{fig:micro-sd-ptl-005}
 \end{figure}
 
 \noindent
-The micro SD card adapter/module chosen is a simplistic connector, merely relaying the SPI connectors from the micro SD card to the SPI pins on the microcontroller. It runs on 3.3V and features low quiescent current when not used. The SD card itself is limited by the SPI and library limitations, limiting its size to $ 32 \si{\giga\byte} $ The SD card used can be variable by design, and the limiting factor will ultimately be the size of the files on the SD card, as they have to be transferred, The 24 hour data used approximately $ 1 \si{\mega\byte} $ of storage with 8640 data points. This means the card itself will likely not be the bottleneck. 16 $ 16 \si{\giga\byte} $ card were used for this project simply because they were readily available and rather affordable.
+The micro SD card adapter/module chosen is a simplistic connector, merely relaying the SPI connectors from the micro SD card to the SPI pins on the microcontroller. It runs on 3.3V and features low quiescent current when not used. The SD card itself is limited by the SPI and library limitations, limiting its size to $ 32 \si{\giga\byte} $ The SD card used can be variable by design, and the limiting factor will ultimately be the size of the files on the SD card, as they have to be transferred, The 24 hour data used approximately $ 1 \si{\mega\byte} $ of storage with 8640 data points. This means the card itself will likely not be the bottleneck.$ 16 \si{\giga\byte} $ card were used for this project simply because they were readily available and rather affordable.
 
 
 
@@ -117,40 +120,44 @@ The micro SD card adapter/module chosen is a simplistic connector, merely relayi
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{body/fig/flowchart.drawio.png}
+	\includegraphics[width=\textwidth]{body/fig/flowchart.drawio.pdf}
 	\caption{Flow diagram of software implementation on the base station}
 	\label{fig:softwareoverview}
 \end{figure}
+\noindent
+A basic diagram of the software flow can be seen in Figure~\ref{fig:softwareoverview} and encompasses the following:
+The microcontroller is initialised and both UARTs are started, then the SPI and I2C interface is initialised. For the Satellite station, only AP mode is needed for ESP-NOW, but the Base needs both AP and Station mode to be able to access WiFi and start its file server. The SD card is then mounted. This is where the software differs, in terms of time. The Base syncs using a time server, while the satellite is dependent on GPS timing. The webserver is then started on the Base board. The sensor values are written on loop every 10 seconds on both boards. There is a constant check every 10 seconds on the Satellite station when it gets location to see if it is within range of the Base. If it is within range, it starts sending the data on the SD card. The callback function on the Base board receives the data and writes it to a seperate file.
+
 
 \subsubsection{GPS and UART}
 The GPS unit uses UART Serial commands to send its data to the ESP32. The data received from the GPS module is in the format of NMEA strings. This is the standard format for most GPS receivers.\cite{NMEA}
 \begin{table}[!htb]
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|l|}
-			\hline
-			NMEA Sentence & Meaning \\ \hline
-			GPGGA & Global positioning system fix data (time, position, fix type data) \\ \hline
-			GPGLL & Geographic position, latitude, longitude \\ \hline
-			GPVTG & Course and speed information relative to the ground \\ \hline
-			GPRMC & Time, date, position, course and speed data \\ \hline
-			GPGSA & GPS receiver operating mode, satellites used in the position solution, and DOP values. \\ \hline
-			GPGSV & The number of GPS satellites in view satellite ID numbers, elevation, azimuth and SNR values. \\ \hline
-			GPMSS & Signal to noise ratio, signal strength, frequency, and bit rate from a radio beacon receiver. \\ \hline
-			GPTRF & Transit fix data \\ \hline
-			GPSTN & Multiple data ID \\ \hline
-			GPXTE & cross track error, measured \\ \hline
-			GPZDA & Date and time (PPS timing message, synchronized to PPS). \\ \hline
-			150 & OK to send message. \\ \hline
-		\end{tabular}%
-	}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+NMEA Sentence & Meaning                                                                                       \\ \midrule
+GPGGA         & Global positioning system fix data (time, position, fix type data)                            \\
+GPGLL         & Geographic position, latitude, longitude                                                      \\
+GPVTG         & Course and speed information relative to the ground                                           \\
+GPRMC         & Time, date, position, course and speed data                                                   \\
+GPGSA         & GPS receiver operating mode, satellites used in the position solution, and DOP values.        \\
+GPGSV         & The number of GPS satellites in view satellite ID numbers, elevation, azimuth and SNR values. \\
+GPMSS         & Signal to noise ratio, signal strength, frequency, and bit rate from a radio beacon receiver. \\
+GPTRF         & Transit fix data                                                                              \\
+GPSTN         & Multiple data ID                                                                              \\
+GPXTE         & cross track error, measured                                                                   \\
+GPZDA         & Date and time (PPS timing message, synchronised to PPS).                                      \\
+150           & OK to send message.                                                                           \\ \bottomrule
+\end{tabular}%
+}
 	\label{tab:nmea}
 	\caption{NMEA Sentences and their meanings \cite{GPSSentence}}
 \end{table}
 
 \noindent
-This data is sent over the UART in comma delimited messages, the UART is set by default to 9600 baud.
-The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialized separately and the second UART is passed to the gps encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
-The outputs from the GPS that are actually used are the date, time, longitude and latitude. This data is written to the sd card in the first header columns in the case of the satellite station.
+This data is sent over the UART in comma-delimited messages, the UART is set by default to 9600 baud.
+The ESP32-S2 has 2 hardware UARTs, one is used for debugging and communication with the device while developing and one is for communicating with the GPS module. The first UART is set to 115200 baud and the second to 9600 baud. Each UART is initialised separately and the second UART is passed to the GPS encoding library TinyGPS++. The first UART is only called when debugging or notices are needed. It is used to check sending of messages using ESP-NOW for example.
+The outputs from the GPS that are used are the date, time, longitude and latitude. This data is written to the sd card in the first header columns in the case of the satellite station.
 
 \noindent
 The data is then used to also find the distance between the satellite station and the coordinates set for the base station. The formula used to calculate the distance between the two was as follows:
@@ -193,10 +200,10 @@ The function called after the distance is measured is as follows:
 	}   
 	
 \end{lstlisting}
-This keeps the function from being called every time a new gps measurement takes place and the distance is still within the radius.
+This keeps the function from being called every time a new GPS measurement takes place and the distance is still within the radius.
 \subsection{ESP-NOW and related}
-As mentioned in the above section, the GPS coordinates determine whether when the data from the satellite station should be sent. But before the data can be sent, a few initialization steps need to take place.
-esp\_now\_init() gets called to initialize the ESP-NOW protocol, this returns ESP\_OK when done. Next the base station MAC address is written to memory and passed to the ESP-NOW handler, here the connection could be encrypted, but it is not necessary for the functionality as the data we are sending is not private. We then register the callback function that checks if the packet was sent successfully ESP\_NOW\_SEND\_SUCCESS will be returned if it was. When writing to the SD card there is a variable keeping track of the datas location, this counter serves as a means of incrementing if data has been sent before and to ensure all data was sent, if the data at receiving side is not incremental, it means we have made an error. The data sent to using the ESP-NOW protocol has a set format, in this case it takes a struct with the format:
+As mentioned in the above section, the GPS coordinates determine whether the data from the satellite station should be sent. But before the data can be sent, a few initialisation steps need to take place.
+esp\_now\_init() gets called to initialise the ESP-NOW protocol, this returns ESP\_OK when done. Next, the base station MAC address is written to memory and passed to the ESP-NOW handler, here the connection could be encrypted, but it is not necessary for the functionality as the data we are sending is not private. We then register the callback function that checks if the packet was sent successfully ESP\_NOW\_SEND\_SUCCESS will be returned if it was. When writing to the SD card there is a variable keeping track of the data location, this counter serves as a means of incrementing if data has been sent before and to ensure all data was sent, if the data at receiving side is not incremental, it means we have made an error. The data sent using the ESP-NOW protocol has a set format, in this case, it takes a struct with the format:
 
 
 \begin{lstlisting}
